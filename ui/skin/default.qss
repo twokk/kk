@@ -1,0 +1,113 @@
+/* Attribute Dialog stylesheet */
+#app_window_name_self_name{
+    background-color: #cdcdcd;
+}
+QDialog {
+    background-color: #ffffff;
+    border: 1px solid #cecece;
+}
+QLineEdit{
+    border: 1px solid #cecece;
+}
+QLineEdit:focus {
+    border: 1px solid #006aa2;
+}
+#baseDialogTitle {
+    border: 3px solid #17A4EC;
+    background-color: #17A4EC;
+}
+
+/* Setting Menu Stylesheet */
+QMenu {
+    background-color: #ffffff;
+    border: 1px solid #cecece;
+}
+QMenu::item {
+    margin: 0px, 0px, 0px, 0px;
+    padding: 10px;
+    font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+}
+
+QMenu::item:selected {
+    background-color: #eeeeee;
+    font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+}
+
+#app_dock_bar_name_minim_button,#app_dock_bar_name_maxim_button,#app_dock_bar_name_close_button {
+    background-color: transparent;
+    color: black;
+}
+#app_dock_bar_name_minim_button:hover,#app_dock_bar_name_maxim_button:hover,#app_dock_bar_name_close_button:hover {
+    background: white;
+    color: black;
+    border: 1px solid #ddd;
+}
+
+QToolButton, #publishBtn,#newBtn,#attributeBtn {
+    background: #E0E0E0;
+    color: black;
+    border: 1px solid #ddd;
+    width:100px;
+    font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+}
+
+QToolButton:hover, #publishBtn:hover, #newBtn:hover, #attributeBtn:hover, QToolButton:checked{
+    background: #1f8dd6;
+    color: white;
+    border: 1px solid #1f8dd6;
+    font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+}
+
+#mdEditor{
+    border:1px solid #f0f0f0;
+}
+
+QToolButton::menu-indicator{
+     image: None;
+}
+
+QWebView{
+    font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+}
+
+QScrollBar:vertical
+{
+    /*border-top:1px solid #86A3DA;*/
+    background-color:white;
+    max-width:14px;
+    min-width:14px;
+}
+QScrollBar::handle:vertical {
+    /*background:url(skins/img/ButtonBg/bg-scroll-3-1.png) no-repeat;*/
+    background-color:#cecece;
+    min-width:13px;
+    min-height:39px;
+    max-width:13px;
+    max-height:39px;
+    margin-right:1px;
+}
+QScrollBar::handle:vertical:hover
+{
+    /*background:url(skins/img/ButtonBg/bg-scroll-3-2.png) no-repeat;*/
+    background-color:#7b7b7b;
+}
+QScrollBar::add-line:vertical {
+      border: none;
+      background:rgb(0,0,0,0);
+      width:0px;
+      height:0px;
+      subcontrol-position: bottom;
+      subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical{
+      border:none;
+      background:rgb(0,0,0,0);
+      width:0px;
+      height:0px;
+      subcontrol-position: top;
+      subcontrol-origin: margin;
+}
+QScrollBar::add-page:vertical , QScrollBar::sub-page:vertical {
+      background: none;
+}
+

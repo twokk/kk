@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/script">
+        <file alias="marked">markdown.js</file>
+    </qresource>
+</RCC>
