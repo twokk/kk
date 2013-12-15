@@ -3,6 +3,7 @@
         <file alias="default">skin/default.qss</file>
     </qresource>
     <qresource prefix="/images">
-        <file alias="bg">skin/bg.jpg</file>
+        <file alias="blue">skin/blue.png</file>
+        <file alias="16">skin/16.png</file>
     </qresource>
 </RCC>

@@ -1,6 +1,9 @@
 /* Attribute Dialog stylesheet */
 #app_window_name_self_name{
-    background-color: #cdcdcd;
+
+}
+#app_window_name_splitter{
+    opacity:0.6;
 }
 QDialog {
     background-color: #ffffff;
@@ -33,14 +36,17 @@ QMenu::item:selected {
     font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
 }
 
-#app_dock_bar_name_minim_button,#app_dock_bar_name_maxim_button,#app_dock_bar_name_close_button {
+#app_dock_bar_name_minim_button,#app_dock_bar_name_maxim_button,#app_dock_bar_name_close_button,#app_dock_bar_name_setup_button{
+    width:24px;
+    height:24px;
+    color: black;
+    border: 0px;
     background-color: transparent;
-    color: black;
 }
-#app_dock_bar_name_minim_button:hover,#app_dock_bar_name_maxim_button:hover,#app_dock_bar_name_close_button:hover {
-    background: white;
-    color: black;
-    border: 1px solid #ddd;
+
+#app_dock_bar_name_minim_button:hover,#app_dock_bar_name_maxim_button:hover,#app_dock_bar_name_close_button:hover,#app_dock_bar_name_setup_button:hover{
+    color: white;
+    background-color: transparent;
 }
 
 QToolButton, #publishBtn,#newBtn,#attributeBtn {

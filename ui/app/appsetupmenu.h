@@ -36,6 +36,28 @@ private:
     
 signals:
     void setupMenuShowSignal();
+    void openFileSignal();
+    void saveHtmlSignal();
+    void saveMarkdownSignal();
+    void previewSignal();
+    void editViewSignal();
+    void doubleViewSignal();
+    void helpSignal();
+    void aboutSignal();
+    void feedBackSignal();
+    void exitSignal();
+
+public slots:
+    void openFileSlots();
+    void saveHtmlSlots();
+    void saveMarkdownSlots();
+    void previewSlots();
+    void editViewSlots();
+    void doubleViewSlots();
+    void helpSlots();
+    void aboutSlots();
+    void feedBackSlots();
+    void exitSlots();
 };
 
 #endif // SETUPMENU_H

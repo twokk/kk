@@ -68,6 +68,17 @@ void AppUi::initComponent()
     connect(dockBar->getCloseButton(), &QToolButton::clicked, this, &AppUi::close);
     connect(dockBar->getMaximButton(), &QToolButton::clicked, this, &AppUi::showMaxRestore);
     connect(dockBar->getMinimButton(), &QToolButton::clicked, this, &AppUi::showMinimized);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::exitSignal, this, &AppUi::close);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::openFileSignal, splitter, &AppSplitter::openFileSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveHtmlSignal, splitter, &AppSplitter::saveHtmlSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveMarkdownSignal, splitter, &AppSplitter::saveMarkdownSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::previewSignal, splitter, &AppSplitter::previewSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::editViewSignal, splitter, &AppSplitter::editViewSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::doubleViewSignal, splitter, &AppSplitter::doubleViewSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::helpSignal, splitter, &AppSplitter::helpSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::aboutSignal, splitter, &AppSplitter::aboutSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::feedBackSignal, splitter, &AppSplitter::feedBackSlots);
+    connect(splitter, &AppSplitter::editContentsChangedSignal, dockBar, &AppDockBar::editContentsChangedSlots);
 }
 
 /**
@@ -122,7 +133,7 @@ void AppUi::setupStyleSheet(QString style)
     }
 
     QPalette palette;
-    palette.setBrush(QPalette::Background, QBrush(QPixmap(":/images/bg")));
+    palette.setBrush(QPalette::Background, QBrush(QPixmap(":/images/blue")));
     this->setPalette(palette);
 }
 

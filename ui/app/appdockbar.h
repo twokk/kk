@@ -2,6 +2,7 @@
 #define APPDOCKBAR_H
 
 #include <QLabel>
+#include <QPixmap>
 #include <QWidget>
 #include <QString>
 #include <QToolButton>
@@ -22,6 +23,7 @@ class AppDockBar : public QWidget
 public:
     explicit AppDockBar(QWidget *parent = 0);
     virtual ~AppDockBar();
+    AppSetupMenu* getSetupMenu();
 
     QToolButton* getCloseButton();
     QToolButton* getMaximButton();
@@ -49,6 +51,7 @@ signals:
 public slots:
     void setTextContent(QString content);
     void setSetupMenuPos();
+    void editContentsChangedSlots();
 
 };
 

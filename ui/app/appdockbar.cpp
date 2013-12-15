@@ -43,7 +43,7 @@ void AppDockBar::initWindowComponent()
     toolsLayout = new QHBoxLayout();
 
     vLayout->setMargin(0);
-    titleLayout->setMargin(0);
+    titleLayout->setMargin(5);
     toolsLayout->setMargin(0);
 
     vLayout->setSpacing(0);
@@ -59,7 +59,7 @@ void AppDockBar::initWindowComponent()
     closeButton->setText(APP_DOCK_BAR_TRANS_NAMES_CLOSE_BUTTON);
 
     maximButton = new QToolButton();
-    closeButton->setObjectName(APP_DOCK_BAR_NAME_MAXIM_BUTTON);
+    maximButton->setObjectName(APP_DOCK_BAR_NAME_MAXIM_BUTTON);
     maximButton->setText(APP_DOCK_BAR_TRANS_NAMES_MAXIM_BUTTON);
 
     minimButton = new QToolButton();
@@ -67,13 +67,13 @@ void AppDockBar::initWindowComponent()
     minimButton->setText(APP_DOCK_BAR_TRANS_NAMES_MINIM_BUTTON);
 
     setupButton = new QToolButton();
-    setupButton->setObjectName(APP_DOCK_BAR_NAME_SETUP_MENU);
+    setupButton->setObjectName(APP_DOCK_BAR_NAME_SETUP_BUTTON);
     setupButton->setPopupMode(QToolButton::InstantPopup);
     setupButton->setText(APP_DOCK_BAR_TRANS_NAMES_SETTING_BUTTON);
 
     logoLable = new QLabel();
+    logoLable->setPixmap(QPixmap(APP_DOCK_BAR_TRANS_NAMES_LOGO_LABEL));
     logoLable->setObjectName(APP_DOCK_BAR_NAME_LOGO_LABEL);
-    logoLable->setText(APP_DOCK_BAR_TRANS_NAMES_LOGO_LABEL);
 
     textLabel = new QLabel();
     textLabel->setObjectName(APP_DOCK_BAR_NAME_TEXT_LABEL);
@@ -148,4 +148,20 @@ void AppDockBar::setSetupMenuPos()
     pos.setX(pos.x() + setupButton->width() - setupMenu->width());
     pos.setY(pos.y() + setupButton->height());
     setupMenu->popup(pos);
+}
+
+/**
+* 获取设置菜单对象
+*/
+AppSetupMenu* AppDockBar::getSetupMenu()
+{
+    return setupMenu;
+}
+
+/**
+* 编辑器内容发生变化
+*/
+void AppDockBar::editContentsChangedSlots()
+{
+    this->textLabel->setText(" - untitled*");
 }

@@ -26,7 +26,8 @@
 #define APP_DOCK_BAR_NAME_TITLE_LABEL "app_dock_bar_name_title_label"
 #define APP_DOCK_BAR_NAME_TEXT_LABEL "app_dock_bar_name_text_label"
 #define APP_DOCK_BAR_NAME_SELF_NAME "app_dock_bar_name_self_name"
-#define APP_DOCK_BAR_NAME_SETUP_MENU "app_dock_bar_name_seup_menu"
+#define APP_DOCK_BAR_NAME_SETUP_MENU "app_dock_bar_name_setup_menu"
+#define APP_DOCK_BAR_NAME_SETUP_BUTTON "app_dock_bar_name_setup_button"
 
 
 #endif // BUILDNAMES_H

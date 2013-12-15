@@ -62,9 +62,103 @@ void AppSetupMenu::initActions()
     addAction(help);
     addSeparator();
     addAction(exit);
+
+    // 构建信号槽连接
+    connect(prePost, &QAction::triggered, this, &AppSetupMenu::previewSlots);
+    connect(editPost, &QAction::triggered, this, &AppSetupMenu::editViewSlots);
+    connect(doubleView, &QAction::triggered, this, &AppSetupMenu::doubleViewSlots);
+    connect(open, &QAction::triggered, this, &AppSetupMenu::openFileSlots);
+    connect(save, &QAction::triggered, this, &AppSetupMenu::saveMarkdownSlots);
+    connect(saveToHtml, &QAction::triggered, this, &AppSetupMenu::saveHtmlSlots);
+    connect(about, &QAction::triggered, this, &AppSetupMenu::aboutSlots);
+    connect(feedBack, &QAction::triggered, this, &AppSetupMenu::feedBackSlots);
+    connect(help, &QAction::triggered, this, &AppSetupMenu::helpSlots);
+    connect(exit, &QAction::triggered, this, &AppSetupMenu::exitSlots);
 }
 
 void AppSetupMenu::showEvent(QShowEvent *)
 {
     emit setupMenuShowSignal();
 }
+
+/**
+* 打开文件
+*/
+void AppSetupMenu::openFileSlots()
+{
+    emit openFileSignal();
+}
+
+/**
+* 保存成html格式
+*/
+void AppSetupMenu::saveHtmlSlots()
+{
+    emit saveHtmlSignal();
+}
+
+/**
+* 保存成markdown格式
+*/
+void AppSetupMenu::saveMarkdownSlots()
+{
+    emit saveMarkdownSignal();
+}
+
+/**
+* 预览模式
+*/
+void AppSetupMenu::previewSlots()
+{
+    emit previewSignal();
+}
+
+/**
+* 编辑模式
+*/
+void AppSetupMenu::editViewSlots()
+{
+    emit editViewSignal();
+}
+
+/**
+* 双栏视图
+*/
+void AppSetupMenu::doubleViewSlots()
+{
+    emit doubleViewSignal();
+}
+
+/**
+* 关于程序
+*/
+void AppSetupMenu::aboutSlots()
+{
+    emit aboutSignal();
+}
+
+
+/**
+* 帮助
+*/
+void AppSetupMenu::helpSlots()
+{
+    emit helpSignal();
+}
+
+/**
+* 反馈
+*/
+void AppSetupMenu::feedBackSlots()
+{
+    emit feedBackSignal();
+}
+
+/**
+* 退出程序
+*/
+void AppSetupMenu::exitSlots()
+{
+    emit exitSignal();
+}
+
