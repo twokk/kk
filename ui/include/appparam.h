@@ -28,7 +28,6 @@ enum enum_Direction
 #define APP_WINDOW_RESIZE_RIGHT 3
 #define APP_WINDOW_RESIZE_BOTTOM 6
 #define APP_WINDOW_RESIZE_LEFT 7
-
 #define APP_WINDOW_DEFAULT_STYLE_SHEET ":/skin/default"
 #define APP_WINDOW_BACKGROUND_TRANSPARENT "background-color:transparent"
 
@@ -37,5 +36,12 @@ enum enum_Direction
 
 // 主窗体状态栏参数
 #define APP_STATUS_BAR_FIX_HEIGHT 10
+
+// 文件状态
+#define FILE_STATUS_DEFAULT_FILE_TITLE "new file"
+#define FILE_STATUS_MARKDOWN_EXTENSION_MD "md"
+#define FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN "markdown"
+#define FILE_STATUS_MARKDOWN_EXTENSION_HTM "htm"
+#define FILE_STATUS_MARKDOWN_EXTENSION_HTML "HTML"
 
 #endif // BASEPARAM_H

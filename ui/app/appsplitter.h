@@ -5,10 +5,14 @@
 #include <QTextEdit>
 #include <QWebView>
 #include <QSplitter>
+#include <QFileInfo>
+#include <QTextStream>
 #include <QMessageBox>
+#include <QFileDialog>
 #include "app/bppmarkdown.h"
-#include "base/basefileinfo.h"
+#include "model/fileinfo.h"
 #include "include/appparam.h"
+#include "include/transnames.h"
 
 class AppSplitter : public QSplitter
 {
@@ -19,11 +23,11 @@ public:
 private:
     QWebView* webView;          // 预览窗口
     BppMarkDown* markDown;      // Markdown编辑器
-    BaseFileInfo* fileInfo;     // 文件信息
+    FileInfo* fileInfo;     // 文件信息
 
 signals:
-    void editContentsChangedSignal();
-    void editContentsSavedSignal();
+    void editContentsChangedSignal(QString);
+    void editContentsSavedSignal(QString);
 
 public slots:
     void openFileSlots();
@@ -36,11 +40,11 @@ public slots:
     void aboutSlots();
     void feedBackSlots();
     void editContentsChangedSlots();
-    void editContentsSavedSlots();
 
 private:
     void initWindowStatus();
     void initComponet();
+    void initFileStatus();
 
 };
 

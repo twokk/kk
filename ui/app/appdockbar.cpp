@@ -161,7 +161,15 @@ AppSetupMenu* AppDockBar::getSetupMenu()
 /**
 * 编辑器内容发生变化
 */
-void AppDockBar::editContentsChangedSlots()
+void AppDockBar::editContentsChangedSlots(QString title)
 {
-    this->textLabel->setText(" - untitled*");
+    this->textLabel->setText(title.append("*"));
+}
+
+/**
+* 编辑器内容保存
+*/
+void AppDockBar::editContentsSavedSlots(QString title)
+{
+    this->textLabel->setText(title);
 }

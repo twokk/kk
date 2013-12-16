@@ -79,6 +79,7 @@ void AppUi::initComponent()
     connect(dockBar->getSetupMenu(), &AppSetupMenu::aboutSignal, splitter, &AppSplitter::aboutSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::feedBackSignal, splitter, &AppSplitter::feedBackSlots);
     connect(splitter, &AppSplitter::editContentsChangedSignal, dockBar, &AppDockBar::editContentsChangedSlots);
+    connect(splitter, &AppSplitter::editContentsSavedSignal, dockBar, &AppDockBar::editContentsSavedSlots);
 }
 
 /**

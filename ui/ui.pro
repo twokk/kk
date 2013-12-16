@@ -20,7 +20,7 @@ SOURCES += \
     base/basestatusbar.cpp \
     app/appui.cpp \
     app/appsetupmenu.cpp \
-    base/basefileinfo.cpp
+    model/fileinfo.cpp
 
 HEADERS +=\
         ui_global.h \
@@ -35,7 +35,7 @@ HEADERS +=\
     include/appparam.h \
     app/appui.h \
     app/appsetupmenu.h \
-    base/basefileinfo.h
+    model/fileinfo.h
 
 unix:!symbian {
     maemo5 {

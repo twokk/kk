@@ -1,8 +1,10 @@
 #include "appsplitter.h"
+#include "QDebug"
 
 AppSplitter::AppSplitter(QWidget *parent) :
     QSplitter(parent)
 {
+    initFileStatus();
     initWindowStatus();
     initComponet();
 }
@@ -26,19 +28,12 @@ void AppSplitter::initComponet()
 {
     markDown = new BppMarkDown();
     webView = new QWebView();
-    fileInfo = new BaseFileInfo();
 
     webView->setHtml("<h3>你好,欢迎使用markplus.</h3><hr/>感觉很不错的样子");
 
     this->addWidget(markDown);
     this->addWidget(webView);
     this->setHandleWidth(1);
-
-    fileInfo->setFileStatus(false);
-    fileInfo->setFileName("undefine");
-    fileInfo->setFilePath("");
-    fileInfo->setHtmlText("");
-    fileInfo->setMarkdown("");
 
     // 平分窗口
     QList<int> splitterSizes;
@@ -48,6 +43,25 @@ void AppSplitter::initComponet()
 
     // 建立信号槽连接
     connect(markDown, &BppMarkDown::textChanged, this, &AppSplitter::editContentsChangedSlots);
+}
+
+/**
+* 初始化文件状态
+*/
+void AppSplitter::initFileStatus()
+{
+    fileInfo = new FileInfo();
+
+    // 设置文件状态
+    fileInfo->setSaved(false);
+    fileInfo->setTitled(false);
+    fileInfo->setFileTitle(FILE_STATUS_DEFAULT_FILE_TITLE);
+    fileInfo->setMarkdownFileName("");
+    fileInfo->setMarkdownFilePath("");
+    fileInfo->setHtmlFilePath("");
+    fileInfo->setHtmlFileName("");
+    fileInfo->setHtmlText("");
+    fileInfo->setMarkdown("");
 }
 
 /*******************************************响应设置菜单槽函数***********************************************/
@@ -64,7 +78,63 @@ void AppSplitter::openFileSlots()
 */
 void AppSplitter::saveHtmlSlots()
 {
-    QMessageBox::information(NULL, "Save To Html", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    // 如果文件为空，则新保存文件，否则，直接保存文件内容
+    if(fileInfo->getHtmlFilePath().isEmpty())
+    {
+        QString filePath = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_TO_MARKDOAN_TEXT), ".", FILE_OPERATE_SAVE_TO_HTML_EXTEND);
+        if(!filePath.isEmpty()) {
+            // 追加文件后缀
+            if(!filePath.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_HTM) && !filePath.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_HTML))
+            {
+                filePath.append(".").append(FILE_STATUS_MARKDOWN_EXTENSION_HTML);
+            }
+
+            //方式：Append为追加，WriteOnly，ReadOnly
+            QFile file(filePath);
+
+            // 打开文件失败
+            if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
+                QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
+                return;
+            }
+
+            QFileInfo info(filePath);
+            // 更新文件状态
+            fileInfo->setSaved(true);
+            // 更新文件标题状态
+            fileInfo->setTitled(true);
+            // 更新文件标题
+            fileInfo->setFileTitle(info.baseName());
+            // 更新文件名称
+            fileInfo->setHtmlFileName(info.fileName());
+            // 更新文件路径
+            fileInfo->setHtmlFilePath(info.absoluteFilePath());
+
+            // 写文件
+            QTextStream out(&file);;
+            out << fileInfo->getHtmlText();
+            out.flush();
+            file.close();
+            }
+    }
+    else
+    {
+        // 获取文件
+        QFile file(fileInfo->getHtmlFilePath());
+
+        // 打开文件失败
+        if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
+            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
+            return;
+        }
+        // 写文件
+        QTextStream out(&file);;
+        out << fileInfo->getHtmlText();
+        out.flush();
+        file.close();
+    }
+    // 激发编辑器内容保存信号
+    emit editContentsSavedSignal(fileInfo->getFileTitle());
 }
 
 /**
@@ -72,7 +142,69 @@ void AppSplitter::saveHtmlSlots()
 */
 void AppSplitter::saveMarkdownSlots()
 {
-    QMessageBox::information(NULL, "Save To MarkDown", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    if(fileInfo->getMarkdownFilePath().isEmpty())
+    {
+        QString filePath = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_TO_MARKDOAN_TEXT), ".", FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND);
+        if(!filePath.isEmpty()) {
+            // 追加文件后缀
+            if(!filePath.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MD) && !filePath.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN))
+            {
+                filePath.append(".").append(FILE_STATUS_MARKDOWN_EXTENSION_MD);
+            }
+
+            //方式：Append为追加，WriteOnly，ReadOnly
+            QFile file(filePath);
+
+            // 打开文件失败
+            if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
+                QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
+                return;
+            }
+
+            QFileInfo info(filePath);
+            // 更新文件状态
+            fileInfo->setSaved(true);
+            // 更新文件标题状态
+            fileInfo->setTitled(true);
+            // 更新文件标题
+            fileInfo->setFileTitle(info.baseName());
+            // 更新文件名称
+            fileInfo->setMarkdownFileName(info.fileName());
+            // 更新文件路径
+            fileInfo->setMarkdownFilePath(info.absoluteFilePath());
+
+            // 写文件
+            QTextStream out(&file);;
+            out << fileInfo->getMarkdown();
+            out.flush();
+            file.close();
+
+            qDebug() << fileInfo->getFileTitle();
+        }
+    }
+    else
+    {
+        // 获取文件
+        QFile file(fileInfo->getMarkdownFilePath());
+        qDebug() << fileInfo->getMarkdownFilePath();
+        qDebug() << fileInfo->getMarkdownFileName();
+        qDebug() << fileInfo->getFileTitle();
+
+        // 打开文件失败
+        if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
+            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
+            return;
+        }
+
+        // 写文件
+        QTextStream out(&file);;
+        out << fileInfo->getHtmlText();
+        out.flush();
+        file.close();
+    }
+
+    // 激发编辑器内容保存信号
+    emit editContentsSavedSignal(fileInfo->getFileTitle());
 }
 
 /**
@@ -129,25 +261,18 @@ void AppSplitter::feedBackSlots()
 */
 void AppSplitter::editContentsChangedSlots()
 {
+    // 更新文件markdown内容
     this->fileInfo->setMarkdown(markDown->toPlainText());
+
+    // 更新文件htmlText内容
     this->fileInfo->setHtmlText(markDown->toPlainText());
 
+    // 更新文件保存状态
+    this->fileInfo->setSaved(false);
+
+    // 更新webView内容
     this->webView->setHtml(fileInfo->getHtmlText());
 
-    this->fileInfo->setFileStatus(1);
-
     // 激发编辑器内容发生变化信号
-    emit editContentsChangedSignal();
-}
-
-/**
-* 编辑器内容保存
-*/
-void AppSplitter::editContentsSavedSlots()
-{
-    // 文件状态
-    this->fileInfo->setFileStatus(2);
-
-    // 激发编辑器内容发生变化信号
-    emit editContentsSavedSignal();
+    emit editContentsChangedSignal(fileInfo->getFileTitle());
 }

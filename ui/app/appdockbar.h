@@ -51,7 +51,8 @@ signals:
 public slots:
     void setTextContent(QString content);
     void setSetupMenuPos();
-    void editContentsChangedSlots();
+    void editContentsChangedSlots(QString);
+    void editContentsSavedSlots(QString);
 
 };
 
