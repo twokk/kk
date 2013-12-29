@@ -44,7 +44,7 @@ private:
     QPoint pCurrentPoint;           // 鼠标当前的位置
 
 signals:
-
+    void changeMaximButtonIcon(bool);
 public slots:
     void showMaxRestore();
 

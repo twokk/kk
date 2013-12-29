@@ -3,6 +3,7 @@
 
 #include <QtWidgets/QLabel>
 #include <QPixmap>
+#include <QIcon>
 #include <QtWidgets/QWidget>
 #include <QString>
 #include <QtWidgets/QToolButton>
@@ -53,6 +54,7 @@ public slots:
     void setSetupMenuPos();
     void editContentsChangedSlots(QString);
     void editContentsSavedSlots(QString);
+    void changeMaximButtonIcon(bool);
 
 };
 

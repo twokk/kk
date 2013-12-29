@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/skin">
-        <file alias="default">skin/default.qss</file>
+        <file alias="default.qss">skin/default.qss</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="blue">skin/blue.png</file>
@@ -8,5 +8,12 @@
     </qresource>
     <qresource prefix="/script">
         <file alias="marked">script/marked.js</file>
+    </qresource>
+    <qresource prefix="/tittleButton">
+        <file alias="max">skin/max.png</file>
+        <file alias="mini">skin/mini.png</file>
+        <file alias="normal">skin/normal.png</file>
+        <file alias="setup">skin/setup.png</file>
+        <file alias="close">skin/close.png</file>
     </qresource>
 </RCC>

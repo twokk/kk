@@ -29,6 +29,8 @@ void AppSplitter::initComponet()
     markDown = new BppMarkDown();
     browser = new QWebView();
 
+    markDown->insertPlainText("###Hello, Markdown!");;
+
     this->addWidget(markDown);
     this->addWidget(browser);
     this->setHandleWidth(1);
@@ -44,6 +46,9 @@ void AppSplitter::initComponet()
 
     // 建立信号槽连接
     connect(markDown, &BppMarkDown::textChanged, this, &AppSplitter::editContentsChangedSlots);
+
+    // 激发文本内容变化信号。
+    emit markDown->textChanged();
 }
 
 /**

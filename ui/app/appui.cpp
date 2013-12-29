@@ -69,6 +69,7 @@ void AppUi::initComponent()
     connect(dockBar->getMaximButton(), &QToolButton::clicked, this, &AppUi::showMaxRestore);
     connect(dockBar->getMinimButton(), &QToolButton::clicked, this, &AppUi::showMinimized);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::exitSignal, this, &AppUi::close);
+    connect(this, &AppUi::changeMaximButtonIcon, dockBar, &AppDockBar::changeMaximButtonIcon);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::openFileSignal, splitter, &AppSplitter::openFileSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::saveHtmlSignal, splitter, &AppSplitter::saveHtmlSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::saveAsSignal, splitter, &AppSplitter::saveAsSlots);
@@ -410,6 +411,8 @@ void AppUi::showMaxRestore()
 
         // 设置最大化标志
         this->bIsMaxAble = true;
+
+        emit changeMaximButtonIcon(true);
     }
     // 如果是最大化状态，则恢复到之前的大小
     else
@@ -419,6 +422,8 @@ void AppUi::showMaxRestore()
 
         // 设置最大化标志
         this->bIsMaxAble = false;
+
+        emit changeMaximButtonIcon(false);
     }
 }
 

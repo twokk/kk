@@ -23,8 +23,7 @@ unix:!symbian {
 INCLUDEPATH += ../include \
                 ../include/v8
 
-OTHER_FILES += \
-    skin/default.qss
+OTHER_FILES +=
 
 RESOURCES += \
     res.qrc

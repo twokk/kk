@@ -33,6 +33,7 @@ enum enum_Direction
 
 // 主窗体导航栏参数
 #define APP_DOCK_FIX_HEIGHT 55
+#define APP_DOCK_BAR_TITLE_BUTTON_SIZE 24
 
 // 主窗体状态栏参数
 #define APP_STATUS_BAR_FIX_HEIGHT 10
