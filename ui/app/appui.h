@@ -16,7 +16,7 @@
 #include "appstatusbar.h"
 #include "../include/appparam.h"
 #include "../include/buildnames.h"
-#include "../ui_global.h"
+#include "ui_global.h"
 
 /**
 * 主窗体，所有组件和窗体拖动，大小操作均针对该组件定义

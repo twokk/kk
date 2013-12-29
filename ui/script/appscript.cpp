@@ -1,13 +1,13 @@
-#include "script.h"
+﻿#include "appscript.h"
 
 
-Script::Script()
+AppScript::AppScript()
 {
     markedContext = v8::Context::New();
     initEnvironment();
 }
 
-void Script::initEnvironment()
+void AppScript::initEnvironment()
 {
     QString markedJs = loadMarkedJs();
     v8::Context::Scope scope(markedContext);
@@ -16,8 +16,9 @@ void Script::initEnvironment()
     markedScript->Run();
 }
 
-QString Script::markdownToHtml(QString markdown)
+QString AppScript::markdownToHtml(QString markdown)
 {
+    markdown = filterIllegalChar(markdown);
     v8::TryCatch tryCatch;
     v8::Context::Scope scope(markedContext);
     QString cmd = QString("marked(\"%1\");").arg(markdown);
@@ -28,22 +29,26 @@ QString Script::markdownToHtml(QString markdown)
     return QString(ToCString(str));
 }
 
-QString Script::htmlToMarkdown(QString html)
+QString AppScript::htmlToMarkdown(QString html)
 {
     return html;
 }
 
-const char* Script::ToCString(const v8::String::Utf8Value &value)
+const char* AppScript::ToCString(const v8::String::Utf8Value &value)
 {
     return *value ? *value : "<string conversion failed>";
 }
 
-QString Script::filterIllegalChar(QString input)
+QString AppScript::filterIllegalChar(QString str)
 {
-    return input;
+    str.replace("\\", "\\\\");
+    str.replace("\"", "\\\"");
+    str.replace("\'", "\\\'");
+    str.replace("\n", "\\n");
+    return str;
 }
 
-QString Script::loadMarkedJs()
+QString AppScript::loadMarkedJs()
 {
     QString js = NULL;
     QFile file( ":/script/marked" );
@@ -55,3 +60,4 @@ QString Script::loadMarkedJs()
 
     return js;
 }
+

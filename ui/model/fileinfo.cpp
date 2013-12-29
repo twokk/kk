@@ -1,4 +1,4 @@
-#include "fileinfo.h"
+﻿#include "fileinfo.h"
 
 FileInfo::FileInfo(QObject *parent) :
     QObject(parent)
@@ -114,8 +114,7 @@ QString FileInfo::getHtmlText()
 */
 void FileInfo::setHtmlText(QString text)
 {
-    // 转换markdown文本为html
-    this->htmlText = AppUtil::markDownToHtml(text);
+    this->htmlText = text;
 }
 
 /**

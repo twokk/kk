@@ -20,6 +20,9 @@ unix:!symbian {
     INSTALLS += target
 }
 
+INCLUDEPATH += ../include \
+                ../include/v8
+
 OTHER_FILES += \
     skin/default.qss
 
@@ -37,10 +40,11 @@ HEADERS += \
     base/basestatusbar.h \
     base/basetoolbar.h \
     model/fileinfo.h \
-    util/apputil.h \
     include/appparam.h \
     include/buildnames.h \
-    include/transnames.h
+    include/transnames.h \
+    app/ui_global.h \
+    script/appscript.h
 
 SOURCES += \
     app/appdockbar.cpp \
@@ -52,10 +56,11 @@ SOURCES += \
     base/basestatusbar.cpp \
     base/basetoolbar.cpp \
     model/fileinfo.cpp \
-    util/apputil.cpp \
+    script/appscript.cpp
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../script/release/ -lscript
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../script/debug/ -lscript
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/v8/release/ -lv8_base.ia32
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/v8/debug/ -lv8_base.ia32
+else:unix: LIBS += -L$$PWD/../lib/v8/ -lv8_base.ia32
 
-INCLUDEPATH += $$PWD/../script
-DEPENDPATH += $$PWD/../script
+INCLUDEPATH += $$PWD/../lib/v8/release
+DEPENDPATH += $$PWD/../lib/v8/release

@@ -11,9 +11,9 @@
 #include <QtWebKitWidgets/QWebView>
 #include "../app/bppmarkdown.h"
 #include "../model/fileinfo.h"
-#include "../util/apputil.h"
 #include "../include/appparam.h"
 #include "../include/transnames.h"
+#include "../script/appscript.h"
 
 class AppSplitter : public QSplitter
 {
@@ -23,8 +23,9 @@ public:
 
 private:
     QWebView* browser;       // 预览窗口
-    BppMarkDown* markDown;      // Markdown编辑器
-    FileInfo* fileInfo;     // 文件信息
+    BppMarkDown* markDown;   // Markdown编辑器
+    FileInfo* fileInfo;      // 文件信息
+    AppScript script;        // 解析markdown
 
 signals:
     void editContentsChangedSignal(QString);

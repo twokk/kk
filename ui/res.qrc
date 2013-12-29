@@ -6,4 +6,7 @@
         <file alias="blue">skin/blue.png</file>
         <file alias="16">skin/16.png</file>
     </qresource>
+    <qresource prefix="/script">
+        <file alias="marked">script/marked.js</file>
+    </qresource>
 </RCC>

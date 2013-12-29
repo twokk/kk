@@ -1,7 +1,6 @@
 TEMPLATE = subdirs
 SUBDIRS += \
     setup \
-    ui \
-    script \
+    ui
 
 CONFIG += ordered
