@@ -1,5 +1,4 @@
-#include "bppmarkdown.h"
-#include "include/appparam.h"
+﻿#include "bppmarkdown.h"
 
 BppMarkDown::BppMarkDown(QWidget *parent) :
     BppMarkDownBase(parent)

@@ -1,17 +1,17 @@
-#ifndef APPDOCKBAR_H
+﻿#ifndef APPDOCKBAR_H
 #define APPDOCKBAR_H
 
-#include <QLabel>
+#include <QtWidgets/QLabel>
 #include <QPixmap>
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include <QString>
-#include <QToolButton>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include "app/appsetupmenu.h"
-#include "include/appparam.h"
-#include "include/transnames.h"
-#include "include/buildnames.h"
+#include <QtWidgets/QToolButton>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
+#include "../app/appsetupmenu.h"
+#include "../include/appparam.h"
+#include "../include/transnames.h"
+#include "../include/buildnames.h"
 
 /**
 * 系统导航栏，在窗口最顶部

@@ -3338,7 +3338,7 @@ class V8EXPORT Extension {  // NOLINT
             int source_length = -1);
   virtual ~Extension() { }
   virtual v8::Handle<v8::FunctionTemplate>
-      GetNativeFunction(v8::Handle<v8::String> name) {
+      GetNativeFunction(v8::Handle<v8::String>) {
     return v8::Handle<v8::FunctionTemplate>();
   }
 
@@ -3889,7 +3889,7 @@ typedef void (*JitCodeEventHandler)(const JitCodeEvent* event);
 class V8EXPORT ExternalResourceVisitor {  // NOLINT
  public:
   virtual ~ExternalResourceVisitor() {}
-  virtual void VisitExternalString(Handle<String> string) {}
+  virtual void VisitExternalString(Handle<String>) {}
 };
 
 
@@ -3899,8 +3899,8 @@ class V8EXPORT ExternalResourceVisitor {  // NOLINT
 class V8EXPORT PersistentHandleVisitor {  // NOLINT
  public:
   virtual ~PersistentHandleVisitor() {}
-  virtual void VisitPersistentHandle(Persistent<Value> value,
-                                     uint16_t class_id) {}
+  virtual void VisitPersistentHandle(Persistent<Value>,
+                                     uint16_t) {}
 };
 
 
@@ -3911,7 +3911,7 @@ class V8EXPORT PersistentHandleVisitor {  // NOLINT
  */
 class V8EXPORT AssertNoGCScope {
 #ifndef DEBUG
-  V8_INLINE(AssertNoGCScope(Isolate* isolate)) {}
+  V8_INLINE(AssertNoGCScope(Isolate*)) {}
 #else
   AssertNoGCScope(Isolate* isolate);
   ~AssertNoGCScope();
@@ -4946,7 +4946,7 @@ class V8EXPORT OutputStream {  // NOLINT
    * can be stopped by returning kAbort as function result. EndOfStream
    * will not be called in case writing was aborted.
    */
-  virtual WriteResult WriteHeapStatsChunk(HeapStatsUpdate* data, int count) {
+  virtual WriteResult WriteHeapStatsChunk(HeapStatsUpdate*, int) {
     return kAbort;
   };
 };
@@ -5156,13 +5156,13 @@ class Internals {
     return I::ReadField<T>(embedder_data, value_offset);
   }
 
-  V8_INLINE(static bool CanCastToHeapObject(void* o)) { return false; }
-  V8_INLINE(static bool CanCastToHeapObject(Context* o)) { return true; }
-  V8_INLINE(static bool CanCastToHeapObject(String* o)) { return true; }
-  V8_INLINE(static bool CanCastToHeapObject(Object* o)) { return true; }
-  V8_INLINE(static bool CanCastToHeapObject(Message* o)) { return true; }
-  V8_INLINE(static bool CanCastToHeapObject(StackTrace* o)) { return true; }
-  V8_INLINE(static bool CanCastToHeapObject(StackFrame* o)) { return true; }
+  V8_INLINE(static bool CanCastToHeapObject(void* )) { return false; }
+  V8_INLINE(static bool CanCastToHeapObject(Context* )) { return true; }
+  V8_INLINE(static bool CanCastToHeapObject(String* )) { return true; }
+  V8_INLINE(static bool CanCastToHeapObject(Object* )) { return true; }
+  V8_INLINE(static bool CanCastToHeapObject(Message* )) { return true; }
+  V8_INLINE(static bool CanCastToHeapObject(StackTrace* )) { return true; }
+  V8_INLINE(static bool CanCastToHeapObject(StackFrame* )) { return true; }
 };
 
 }  // namespace internal

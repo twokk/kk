@@ -4,38 +4,12 @@
 #
 #-------------------------------------------------
 
-QT       += core gui webkitwidgets
+QT       += core widgets webkitwidgets
 
 TARGET = ui
 TEMPLATE = lib
 
 DEFINES += UI_LIBRARY
-
-SOURCES += \
-    app/bppmarkdown.cpp \
-    app/appstatusbar.cpp \
-    app/appsplitter.cpp \
-    app/appdockbar.cpp \
-    base/basetoolbar.cpp \
-    base/basestatusbar.cpp \
-    app/appui.cpp \
-    app/appsetupmenu.cpp \
-    model/fileinfo.cpp
-
-HEADERS +=\
-        ui_global.h \
-    app/bppmarkdown.h \
-    app/appstatusbar.h \
-    app/appsplitter.h \
-    app/appdockbar.h \
-    base/basetoolbar.h \
-    base/basestatusbar.h \
-    include/transnames.h \
-    include/buildnames.h \
-    include/appparam.h \
-    app/appui.h \
-    app/appsetupmenu.h \
-    model/fileinfo.h
 
 unix:!symbian {
     maemo5 {
@@ -51,3 +25,37 @@ OTHER_FILES += \
 
 RESOURCES += \
     res.qrc
+
+HEADERS += \
+    ui_global.h \
+    app/appdockbar.h \
+    app/appsetupmenu.h \
+    app/appsplitter.h \
+    app/appstatusbar.h \
+    app/appui.h \
+    app/bppmarkdown.h \
+    base/basestatusbar.h \
+    base/basetoolbar.h \
+    model/fileinfo.h \
+    util/apputil.h \
+    include/appparam.h \
+    include/buildnames.h \
+    include/transnames.h
+
+SOURCES += \
+    app/appdockbar.cpp \
+    app/appsetupmenu.cpp \
+    app/appsplitter.cpp \
+    app/appstatusbar.cpp \
+    app/appui.cpp \
+    app/bppmarkdown.cpp \
+    base/basestatusbar.cpp \
+    base/basetoolbar.cpp \
+    model/fileinfo.cpp \
+    util/apputil.cpp \
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../script/release/ -lscript
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../script/debug/ -lscript
+
+INCLUDEPATH += $$PWD/../script
+DEPENDPATH += $$PWD/../script

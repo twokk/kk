@@ -1,22 +1,22 @@
-#ifndef APPUI_H
+﻿#ifndef APPUI_H
 #define APPUI_H
 
 #include <QRect>
 #include <QSize>
 #include <QPoint>
 #include <math.h>
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include <QPalette>
 #include <QMouseEvent>
-#include <QVBoxLayout>
-#include <QApplication>
-#include <QDesktopWidget>
-#include "app/appdockbar.h"
-#include "app/appsplitter.h"
-#include "app/appstatusbar.h"
-#include "include/appparam.h"
-#include "include/buildnames.h"
-#include "ui_global.h"
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QDesktopWidget>
+#include "appdockbar.h"
+#include "appsplitter.h"
+#include "appstatusbar.h"
+#include "../include/appparam.h"
+#include "../include/buildnames.h"
+#include "../ui_global.h"
 
 /**
 * 主窗体，所有组件和窗体拖动，大小操作均针对该组件定义

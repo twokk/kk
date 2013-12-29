@@ -1,4 +1,4 @@
-#ifndef BUILDNAMES_H
+﻿#ifndef BUILDNAMES_H
 #define BUILDNAMES_H
 
 /**

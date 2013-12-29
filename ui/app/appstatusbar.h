@@ -1,8 +1,8 @@
-#ifndef APPSTATUSBAR_H
+﻿#ifndef APPSTATUSBAR_H
 #define APPSTATUSBAR_H
 
-#include "include/appparam.h"
-#include "base/basestatusbar.h"
+#include "../include/appparam.h"
+#include "../base/basestatusbar.h"
 
 /**
 * 系统状态栏，在窗体最底部

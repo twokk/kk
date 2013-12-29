@@ -12,7 +12,6 @@ TARGET = script
 TEMPLATE = lib
 
 INCLUDEPATH += ../include
-INCLUDEPATH += ../include/v8
 
 DEFINES += SCRIPT_LIBRARY
 
@@ -24,9 +23,10 @@ HEADERS += script.h\
 RESOURCES += \
     res.qrc
 
-win32:CONFIG(release, debug|release): LIBS += -LE:/lib/v8/release/ -lv8_base.ia32
-else:win32:CONFIG(debug, debug|release): LIBS += -LE:/lib/v8/debug/ -lv8_base.ia32
-else:unix: LIBS += -LE:/lib/v8/ -lv8_base.ia32
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/v8/release/ -lv8_base.ia32
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/v8/debug/ -lv8_base.ia32
 
-INCLUDEPATH += E:/lib/v8
-DEPENDPATH += E:/lib/v8
+INCLUDEPATH += $$PWD/../lib/v8/debug \
+                $$PWD/../lib/v8/release
+DEPENDPATH += $$PWD/../lib/v8/debug \
+                $$PWD/../lib/v8/release

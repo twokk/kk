@@ -112,9 +112,10 @@ QString FileInfo::getHtmlText()
 /**
 * 设置htmlText文本
 */
-void FileInfo::setHtmlText(QString htmlText)
+void FileInfo::setHtmlText(QString text)
 {
-    this->htmlText = htmlText;
+    // 转换markdown文本为html
+    this->htmlText = AppUtil::markDownToHtml(text);
 }
 
 /**

@@ -1,4 +1,4 @@
-#include "appdockbar.h"
+﻿#include "appdockbar.h"
 #include "QDebug"
 
 AppDockBar::AppDockBar(QWidget *parent) :
@@ -143,7 +143,6 @@ QToolButton* AppDockBar::getMinimButton()
 */
 void AppDockBar::setSetupMenuPos()
 {
-    qDebug() << "hello";
     QPoint pos = mapToGlobal(setupButton->pos());
     pos.setX(pos.x() + setupButton->width() - setupMenu->width());
     pos.setY(pos.y() + setupButton->height());

@@ -1,7 +1,7 @@
 #ifndef BASESTATUSBAR_H
 #define BASESTATUSBAR_H
 
-#include <QStatusBar>
+#include <QtWidgets/QStatusBar>
 
 /**
 * 自定义状态栏

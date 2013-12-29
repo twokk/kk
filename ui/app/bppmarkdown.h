@@ -1,13 +1,13 @@
-#ifndef BPPMARKDOWN_H
+﻿#ifndef BPPMARKDOWN_H
 #define BPPMARKDOWN_H
 
 #include <QPoint>
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include <QPainter>
-#include <QWebView>
-#include <QTextEdit>
+#include <QtWidgets/QTextBrowser>
 #include <QTextBlock>
-#include <QPlainTextEdit>
+#include <QtWidgets/QPlainTextEdit>
+#include "../include/appparam.h"
 
 class BppMarkDown;
 class BppMarkDownBase;

@@ -1,18 +1,19 @@
-#ifndef APPSPLITTER_H
+﻿#ifndef APPSPLITTER_H
 #define APPSPLITTER_H
 
 #include <QUrl>
-#include <QTextEdit>
-#include <QWebView>
-#include <QSplitter>
+#include <QtWidgets/QTextEdit>
+#include <QtWidgets/QSplitter>
 #include <QFileInfo>
 #include <QTextStream>
-#include <QMessageBox>
-#include <QFileDialog>
-#include "app/bppmarkdown.h"
-#include "model/fileinfo.h"
-#include "include/appparam.h"
-#include "include/transnames.h"
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QFileDialog>
+#include <QtWebKitWidgets/QWebView>
+#include "../app/bppmarkdown.h"
+#include "../model/fileinfo.h"
+#include "../util/apputil.h"
+#include "../include/appparam.h"
+#include "../include/transnames.h"
 
 class AppSplitter : public QSplitter
 {
@@ -21,7 +22,7 @@ public:
     explicit AppSplitter(QWidget *parent = 0);
 
 private:
-    QWebView* webView;          // 预览窗口
+    QWebView* browser;       // 预览窗口
     BppMarkDown* markDown;      // Markdown编辑器
     FileInfo* fileInfo;     // 文件信息
 
@@ -32,6 +33,7 @@ signals:
 public slots:
     void openFileSlots();
     void saveHtmlSlots();
+    void saveAsSlots();
     void saveMarkdownSlots();
     void previewSlots();
     void editViewSlots();

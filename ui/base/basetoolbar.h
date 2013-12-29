@@ -1,7 +1,7 @@
 #ifndef BASETOOLBAR_H
 #define BASETOOLBAR_H
 
-#include <QToolBar>
+#include <QtWidgets/QToolBar>
 
 /**
 * 自定义工具栏基类

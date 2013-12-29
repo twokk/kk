@@ -1,7 +1,8 @@
-#ifndef FILEINFO_H
+﻿#ifndef FILEINFO_H
 #define FILEINFO_H
 
 #include <QObject>
+#include "../util/apputil.h"
 
 class FileInfo : public QObject
 {

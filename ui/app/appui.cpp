@@ -1,4 +1,4 @@
-#include "appui.h"
+﻿#include "appui.h"
 
 QVBoxLayout* AppUi::layout;         // 主窗体布局
 AppDockBar* AppUi::dockBar;         // 主窗体导航栏
@@ -71,6 +71,7 @@ void AppUi::initComponent()
     connect(dockBar->getSetupMenu(), &AppSetupMenu::exitSignal, this, &AppUi::close);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::openFileSignal, splitter, &AppSplitter::openFileSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::saveHtmlSignal, splitter, &AppSplitter::saveHtmlSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveAsSignal, splitter, &AppSplitter::saveAsSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::saveMarkdownSignal, splitter, &AppSplitter::saveMarkdownSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::previewSignal, splitter, &AppSplitter::previewSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::editViewSignal, splitter, &AppSplitter::editViewSlots);

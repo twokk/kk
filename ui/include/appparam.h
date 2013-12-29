@@ -1,5 +1,5 @@
-#ifndef BASEPARAM_H
-#define BASEPARAM_H
+﻿#ifndef APPPARAM_H
+#define APPPARAM_H
 
 // 主窗体缩放枚举定义
 enum enum_Direction
@@ -44,4 +44,4 @@ enum enum_Direction
 #define FILE_STATUS_MARKDOWN_EXTENSION_HTM "htm"
 #define FILE_STATUS_MARKDOWN_EXTENSION_HTML "HTML"
 
-#endif // BASEPARAM_H
+#endif // APPPARAM_H

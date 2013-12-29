@@ -1,4 +1,4 @@
-#include "appsetupmenu.h"
+﻿#include "appsetupmenu.h"
 #include "QDebug"
 
 AppSetupMenu::AppSetupMenu(QWidget *parent) :
@@ -32,6 +32,7 @@ void AppSetupMenu::initActions()
     open->setShortcut(QObject::tr("Ctrl+O"));
     save = new QAction(QObject::tr("Save(S)"), this);
     save->setShortcut(QObject::tr("Ctrl+S"));
+    saveAs = new QAction(QObject::tr("Save As"), this);
     saveToHtml = new QAction(QObject::tr("Save To Html(H)"), this);
     saveToHtml->setShortcut(QObject::tr("Ctrl+H"));
     syncPost = new QAction(QObject::tr("Sync To Clound"), this);
@@ -52,6 +53,7 @@ void AppSetupMenu::initActions()
     //addAction(print);
     addAction(open);
     addAction(save);
+    addAction(saveAs);
     addAction(saveToHtml);
     //addSeparator();
     //addAction(syncPost);
@@ -69,6 +71,7 @@ void AppSetupMenu::initActions()
     connect(doubleView, &QAction::triggered, this, &AppSetupMenu::doubleViewSlots);
     connect(open, &QAction::triggered, this, &AppSetupMenu::openFileSlots);
     connect(save, &QAction::triggered, this, &AppSetupMenu::saveMarkdownSlots);
+    connect(saveAs, &QAction::triggered, this, &AppSetupMenu::saveAsSlots);
     connect(saveToHtml, &QAction::triggered, this, &AppSetupMenu::saveHtmlSlots);
     connect(about, &QAction::triggered, this, &AppSetupMenu::aboutSlots);
     connect(feedBack, &QAction::triggered, this, &AppSetupMenu::feedBackSlots);
@@ -95,6 +98,14 @@ void AppSetupMenu::openFileSlots()
 void AppSetupMenu::saveHtmlSlots()
 {
     emit saveHtmlSignal();
+}
+
+/**
+* 另存为
+*/
+void AppSetupMenu::saveAsSlots()
+{
+    emit saveAsSignal();
 }
 
 /**

@@ -2,7 +2,9 @@ TEMPLATE = app
 
 TARGET = markplus
 
-QT += core gui webkitwidgets
+QT += core widgets webkitwidgets
+
+QT -= multimediawidgets qml opengl quick
 
 SOURCES += ./main.cpp
 

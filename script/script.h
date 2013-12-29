@@ -5,7 +5,7 @@
 #include <QString>
 #include <QTextStream>
 #include "script_global.h"
-#include "v8.h"
+#include "v8/v8.h"
 
 class SCRIPTSHARED_EXPORT Script
 {

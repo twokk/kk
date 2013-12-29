@@ -1,7 +1,7 @@
-#ifndef SETUPMENU_H
+﻿#ifndef SETUPMENU_H
 #define SETUPMENU_H
 
-#include <QMenu>
+#include <QtWidgets/QMenu>
 
 class AppSetupMenu : public QMenu
 {
@@ -17,6 +17,7 @@ public:
     QAction* print;
     QAction* open;
     QAction* save;
+    QAction* saveAs;
     QAction* saveToHtml;
     QAction* syncPost;
     QAction* setAccount;
@@ -39,6 +40,7 @@ signals:
     void openFileSignal();
     void saveHtmlSignal();
     void saveMarkdownSignal();
+    void saveAsSignal();
     void previewSignal();
     void editViewSignal();
     void doubleViewSignal();
@@ -49,6 +51,7 @@ signals:
 
 public slots:
     void openFileSlots();
+    void saveAsSlots();
     void saveHtmlSlots();
     void saveMarkdownSlots();
     void previewSlots();
