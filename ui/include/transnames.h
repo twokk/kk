@@ -27,4 +27,12 @@
 #define FILE_OPERATE_OPEN_FILE_TITLE "Open"
 #define FILE_OPERATE_OPEN_FILE_EXTEND "Markdown file(*.md *.markdown)"
 
+/**
+* 文件信息KEY值定义
+*/
+#define FILE_INFO_KEY_TEXT "Text"   // 文件内容
+#define FILE_INFO_KEY_TITLE "Title" // 文件标题
+#define FILE_INFO_KEY_FILE_NAME "FileName" // 文件名称
+#define FILE_INFO_KEY_MARKDOWN_FILE_FULL_NAME "MarkdownFileFullName" // markdown文件全路径名称
+
 #endif // TRANSNAMES_H

@@ -14,11 +14,14 @@ AppSplitter::AppSplitter(QWidget *parent) :
 */
 void AppSplitter::initWindowStatus()
 {
+    // 设置鼠标跟踪
     this->setMouseTracking(true);
 
+    // 设置继承父类背景
     this->setAutoFillBackground(true);
 
-    //this->setStyleSheet(APP_WINDOW_BACKGROUND_TRANSPARENT);
+    // 设置允许拖拽
+    this->setAcceptDrops(true);
 }
 
 /**
@@ -28,8 +31,6 @@ void AppSplitter::initComponet()
 {
     markDown = new BppMarkDown();
     browser = new QWebView();
-
-    markDown->insertPlainText("###Hello, Markdown!");;
 
     this->addWidget(markDown);
     this->addWidget(browser);
@@ -44,11 +45,20 @@ void AppSplitter::initComponet()
     // 禁止拖拽分隔条
     this->handle(1)->setDisabled(true);
 
+    // 禁止编辑器拖拽
+    markDown->setAcceptDrops(false);
+
+    // 禁止浏览器拖拽
+    browser->setAcceptDrops(false);
+
+    // 初始化编辑器内容
+    markDown->setPlainText("##Welcome!");
+
+    // 初始化浏览器内容
+    browser->setHtml(script.markdownToHtml(markDown->toPlainText()));
+
     // 建立信号槽连接
     connect(markDown, &BppMarkDown::textChanged, this, &AppSplitter::editContentsChangedSlots);
-
-    // 激发文本内容变化信号。
-    emit markDown->textChanged();
 }
 
 /**
@@ -63,8 +73,8 @@ void AppSplitter::initFileStatus()
     fileInfo->setTitled(false);
     fileInfo->setFileTitle(FILE_STATUS_DEFAULT_FILE_TITLE);
     fileInfo->setMarkdownFileName("");
-    fileInfo->setMarkdownFilePath("");
-    fileInfo->setHtmlFilePath("");
+    fileInfo->setMarkdownFileFullName("");
+    fileInfo->setHtmlFileFullName("");
     fileInfo->setHtmlFileName("");
     fileInfo->setHtmlText("");
     fileInfo->setMarkdown("");
@@ -76,40 +86,8 @@ void AppSplitter::initFileStatus()
 */
 void AppSplitter::openFileSlots()
 {
-    qDebug() << "OPEN FILE" << "/n";
-    QString filePath = QFileDialog::getOpenFileName(this, tr(FILE_OPERATE_OPEN_FILE_TITLE), "D:\\", FILE_OPERATE_OPEN_FILE_EXTEND, 0, QFileDialog::DontUseNativeDialog);
-    qDebug() << "FILE IS OPENING" << "/n";
-    qDebug() << filePath << "/n";
-    if(!filePath.isEmpty()) {
-        qDebug() << "FILE IS OPEN" << "/n";
-        //方式：Append为追加，WriteOnly，ReadOnly
-        QFile file(filePath);
-
-        // 打开文件失败
-        if (!file.open(QIODevice::ReadOnly|QIODevice::Text)) {
-            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
-            return;
-        }
-
-        QFileInfo info(filePath);
-        // 更新文件状态
-        fileInfo->setSaved(true);
-        // 更新文件标题状态
-        fileInfo->setTitled(true);
-        // 更新文件标题
-        fileInfo->setFileTitle(info.baseName());
-        // 更新文件名称
-        fileInfo->setHtmlFileName(info.fileName());
-        // 更新文件路径
-        fileInfo->setHtmlFilePath(info.absoluteFilePath());
-
-        // 读文件
-        QTextStream in(&file);;
-        QString text(in.readAll());
-        fileInfo->setMarkdown(text);
-        fileInfo->setHtmlText(script.markdownToHtml(text));
-        file.close();
-
+    QString fileFullName = QFileDialog::getOpenFileName(this, tr(FILE_OPERATE_OPEN_FILE_TITLE), "D:\\", FILE_OPERATE_OPEN_FILE_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+    if(!fileFullName.isEmpty() && readFile(fileFullName)) {
         // 更新编辑器
         markDown->setPlainText(fileInfo->getMarkdown());
 
@@ -126,66 +104,16 @@ void AppSplitter::openFileSlots()
 */
 void AppSplitter::saveHtmlSlots()
 {
-    // 如果文件为空，则新保存文件，否则，直接保存文件内容
-    if(fileInfo->getHtmlFilePath().isEmpty())
+    if(fileInfo->getHtmlFileFullName().isEmpty())
     {
-        QString filePath = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_TO_HTML_TITLE), ".", FILE_OPERATE_SAVE_TO_HTML_EXTEND, 0, QFileDialog::DontUseNativeDialog);
-        if(!filePath.isEmpty()) {
-            // 追加文件后缀
-            if(!filePath.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_HTM) && !filePath.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_HTML))
-            {
-                filePath.append(".").append(FILE_STATUS_MARKDOWN_EXTENSION_HTML);
-            }
-
-            //方式：Append为追加，WriteOnly，ReadOnly
-            QFile file(filePath);
-
-            // 打开文件失败
-            if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
-                QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
-                return;
-            }
-
-            QFileInfo info(filePath);
-            // 更新文件状态
-            fileInfo->setSaved(true);
-            // 更新文件标题状态
-            fileInfo->setTitled(true);
-            // 更新文件标题
-            fileInfo->setFileTitle(info.baseName());
-            // 更新文件名称
-            fileInfo->setHtmlFileName(info.fileName());
-            // 更新文件路径
-            fileInfo->setHtmlFilePath(info.absoluteFilePath());
-
-            // 写文件
-            QTextStream out(&file);;
-            out << fileInfo->getHtmlText();
-            out.flush();
-            file.close();
-
-            // 激发编辑器内容保存信号
-            emit editContentsSavedSignal(fileInfo->getFileTitle());
-        }
+        QString fileFullName = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_TO_HTML_TITLE), ".", FILE_OPERATE_SAVE_TO_HTML_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+        // 保存html文件
+        writeFile(fileFullName, FILE_STATUS_TYPE_HTML);
     }
     else
     {
-        // 获取文件
-        QFile file(fileInfo->getHtmlFilePath());
-
-        // 打开文件失败
-        if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
-            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
-            return;
-        }
-        // 写文件
-        QTextStream out(&file);;
-        out << fileInfo->getHtmlText();
-        out.flush();
-        file.close();
-
-        // 激发编辑器内容保存信号
-        emit editContentsSavedSignal(fileInfo->getFileTitle());
+        // 保存html文件
+        writeFile(fileInfo->getHtmlFileFullName(), FILE_STATUS_TYPE_HTML);
     }
 }
 
@@ -194,67 +122,17 @@ void AppSplitter::saveHtmlSlots()
 */
 void AppSplitter::saveMarkdownSlots()
 {
-    if(fileInfo->getMarkdownFilePath().isEmpty())
+    if(fileInfo->getMarkdownFileFullName().isEmpty())
     {
-        QString filePath = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE), ".", FILE_OPERATE_SAVE_AS_EXTEND, 0, QFileDialog::DontUseNativeDialog);
-        if(!filePath.isEmpty()) {
-            // 追加文件后缀
-            if(!filePath.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MD) && !filePath.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN))
-            {
-                filePath.append(".").append(FILE_STATUS_MARKDOWN_EXTENSION_MD);
-            }
-
-            //方式：Append为追加，WriteOnly，ReadOnly
-            QFile file(filePath);
-
-            // 打开文件失败
-            if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
-                QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
-                return;
-            }
-
-            QFileInfo info(filePath);
-            // 更新文件状态
-            fileInfo->setSaved(true);
-            // 更新文件标题状态
-            fileInfo->setTitled(true);
-            // 更新文件标题
-            fileInfo->setFileTitle(info.baseName());
-            // 更新文件名称
-            fileInfo->setMarkdownFileName(info.fileName());
-            // 更新文件路径
-            fileInfo->setMarkdownFilePath(info.absoluteFilePath());
-
-            // 写文件
-            QTextStream out(&file);;
-            out << fileInfo->getMarkdown();
-            out.flush();
-            file.close();
-
+        QString fileFullName = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE), ".", FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+        // 保存markdown文件
+        if(!fileFullName.isEmpty() && writeFile(fileFullName, FILE_STATUS_TYPE_MARKDOWN)) {
             // 激发编辑器内容保存信号
             emit editContentsSavedSignal(fileInfo->getFileTitle());
         }
     }
-    else
+    else if(writeFile(fileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN))
     {
-        // 获取文件
-        QFile file(fileInfo->getMarkdownFilePath());
-        qDebug() << fileInfo->getMarkdownFilePath();
-        qDebug() << fileInfo->getMarkdownFileName();
-        qDebug() << fileInfo->getFileTitle();
-
-        // 打开文件失败
-        if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
-            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
-            return;
-        }
-
-        // 写文件
-        QTextStream out(&file);;
-        out << fileInfo->getHtmlText();
-        out.flush();
-        file.close();
-
         // 激发编辑器内容保存信号
         emit editContentsSavedSignal(fileInfo->getFileTitle());
     }
@@ -265,36 +143,9 @@ void AppSplitter::saveMarkdownSlots()
 */
 void AppSplitter::saveAsSlots()
 {
-    QString filePath = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_AS), ".", FILE_OPERATE_SAVE_AS_EXTEND);
-    if(!filePath.isEmpty()) {
-
-        //方式：Append为追加，WriteOnly，ReadOnly
-        QFile file(filePath);
-
-        // 打开文件失败
-        if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
-            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
-            return;
-        }
-
-        QFileInfo info(filePath);
-        // 更新文件状态
-        fileInfo->setSaved(true);
-        // 更新文件标题状态
-        fileInfo->setTitled(true);
-        // 更新文件标题
-        fileInfo->setFileTitle(info.baseName());
-        // 更新文件名称
-        fileInfo->setMarkdownFileName(info.fileName());
-        // 更新文件路径
-        fileInfo->setMarkdownFilePath(info.absoluteFilePath());
-
-        // 写文件
-        QTextStream out(&file);;
-        out << fileInfo->getMarkdown();
-        out.flush();
-        file.close();
-
+    QString fileFullName = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_AS), ".", FILE_OPERATE_SAVE_AS_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+    if(!fileFullName.isEmpty() && writeFile(fileFullName, FILE_STATUS_TYPE_OTHER))
+    {
         // 激发编辑器内容保存信号
         emit editContentsSavedSignal(fileInfo->getFileTitle());
     }
@@ -378,4 +229,136 @@ void AppSplitter::editContentsChangedSlots()
 
     // 激发编辑器内容发生变化信号
     emit editContentsChangedSignal(fileInfo->getFileTitle());
+}
+
+/*******************************************拖拽实现***********************************************/
+/**
+* 拖动文件事件
+*/
+void AppSplitter::dragEnterEvent(QDragEnterEvent *event)
+{
+    if(event->mimeData()->hasFormat("text/uri-list"))
+    {
+        event->acceptProposedAction();
+    }
+}
+
+/**
+* 放下文件事件
+*/
+void AppSplitter::dropEvent(QDropEvent *event)
+{
+    QList<QUrl> urls = event->mimeData()->urls();
+
+    if(urls.isEmpty())
+    {
+        return;
+    }
+
+    // 获取拖动文件中的第一个
+    QString fileFullName = urls.first().toLocalFile();
+
+    // 读取文件内容
+    if(readFile(fileFullName))
+    {
+        // 设置markdown编辑器内容
+        markDown->setPlainText(fileInfo->getMarkdown());
+    }
+}
+
+/*******************************************拖拽实现***********************************************/
+
+/**
+* 读取文件
+*/
+bool AppSplitter::readFile(QString fileFullName)
+{
+    if(!fileFullName.isEmpty())
+    {
+        // 读取文件
+        QFile file(fileFullName);
+
+        // 打开文件失败
+        if (!file.open(QIODevice::ReadOnly|QIODevice::WriteOnly|QIODevice::Text)) {
+            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
+            return false;
+        }
+
+        // 读文件
+        QTextStream in(&file);
+        QFileInfo info(fileFullName);
+        QString text(in.readAll());
+
+        // 更新文件信息
+        fileInfo->setFileTitle(info.filePath());
+        fileInfo->setMarkdown(text);
+        fileInfo->setHtmlText(script.markdownToHtml(text));
+        fileInfo->setMarkdownFileName(info.baseName());
+        fileInfo->setHtmlFileName("");
+        fileInfo->setMarkdownFileFullName(info.filePath());
+        fileInfo->setHtmlFileFullName("");
+        fileInfo->setSaved(true);
+        fileInfo->setTitled(true);
+
+        file.close();
+
+        return true;
+    }
+
+    return false;
+}
+
+/**
+* 写文件
+* @fileFullName
+* @type 1:markdown,2:html
+*/
+bool AppSplitter::writeFile(QString fileFullName, int type)
+{
+    if(!fileFullName.isEmpty()) {
+        QFile file(fileFullName);
+
+        // 打开文件失败
+        if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
+            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
+            return false;
+        }
+
+        // 写文件
+        QTextStream out(&file);
+        // 保存markdown
+        if(type == FILE_STATUS_TYPE_MARKDOWN || type == FILE_STATUS_TYPE_OTHER)
+        {
+            QFileInfo info(fileFullName);
+            // 更新文件标题
+            fileInfo->setFileTitle(info.filePath());
+            // 更新文件名称
+            fileInfo->setMarkdownFileName(info.fileName());
+            // 更新文件路径
+            fileInfo->setMarkdownFileFullName(info.filePath());
+            // 更新文件状态
+            fileInfo->setSaved(true);
+            // 更新文件标题状态
+            fileInfo->setTitled(true);
+
+            // 写文件内容到输出流
+            out << fileInfo->getMarkdown();
+
+            // 激发编辑器内容保存信号
+            emit editContentsSavedSignal(fileInfo->getFileTitle());
+        }
+        // 保存html
+        else if(type == FILE_STATUS_TYPE_HTML)
+        {
+            // 写文件内容到输出流
+            out << fileInfo->getHtmlText();
+        }
+
+        out.flush();
+        file.close();
+
+        return true;
+    }
+
+    return false;
 }

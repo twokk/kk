@@ -54,35 +54,35 @@ void FileInfo::setHtmlFileName(QString fileName)
 }
 
 /**
-* 获取markdown文件路径
+* 获取markdown全路径名称
 */
-QString FileInfo::getMarkdownFilePath()
+QString FileInfo::getMarkdownFileFullName()
 {
-    return this->markdownFilePath;
+    return this->markdownFileFullName;
 }
 
 /**
-* 设置markdown文件名称
+* 设置markdown全路径名称
 */
-void FileInfo::setMarkdownFilePath(QString filePath)
+void FileInfo::setMarkdownFileFullName(QString fileFullName)
 {
-    this->markdownFilePath = filePath;
+    this->markdownFileFullName = fileFullName;
 }
 
 /**
-* 获取html文件路径
+* 获取html全路径名称
 */
-QString FileInfo::getHtmlFilePath()
+QString FileInfo::getHtmlFileFullName()
 {
-    return this->htmlFilePath;
+    return this->htmlFileFullName;
 }
 
 /**
-* 设置html文件路径
+* 设置html全路径名称
 */
-void FileInfo::setHtmlFilePath(QString filePath)
+void FileInfo::setHtmlFileFullName(QString fileFullName)
 {
-    this->htmlFilePath = filePath;
+    this->htmlFileFullName = fileFullName;
 }
 
 /**

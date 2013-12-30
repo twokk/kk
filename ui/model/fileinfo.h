@@ -11,8 +11,8 @@ public:
     QString getFileTitle();
     QString getMarkdownFileName();
     QString getHtmlFileName();
-    QString getMarkdownFilePath();
-    QString getHtmlFilePath();
+    QString getMarkdownFileFullName();
+    QString getHtmlFileFullName();
     QString getMarkdown();
     QString getHtmlText();
     bool isSaved();
@@ -20,8 +20,8 @@ public:
     void setFileTitle(QString);
     void setMarkdownFileName(QString);
     void setHtmlFileName(QString);
-    void setMarkdownFilePath(QString);
-    void setHtmlFilePath(QString);
+    void setMarkdownFileFullName(QString);
+    void setHtmlFileFullName(QString);
     void setMarkdown(QString);
     void setHtmlText(QString);
     void setFileStatus(int);
@@ -36,8 +36,8 @@ private:
     QString fileTitle;
     QString markdownFileName;
     QString htmlFileName;
-    QString markdownFilePath;
-    QString htmlFilePath;
+    QString markdownFileFullName;
+    QString htmlFileFullName;
     QString markdown;
     QString htmlText;
     bool bSaved;

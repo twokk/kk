@@ -2,10 +2,14 @@
 #define APPSPLITTER_H
 
 #include <QUrl>
+#include <QList>
+#include <QFileInfo>
+#include <QMimeData>
+#include <QTextStream>
+#include <QDropEvent>
+#include <QDragEnterEvent>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QSplitter>
-#include <QFileInfo>
-#include <QTextStream>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QFileDialog>
 #include <QtWebKitWidgets/QWebView>
@@ -28,8 +32,8 @@ private:
     AppScript script;        // 解析markdown
 
 signals:
-    void editContentsChangedSignal(QString);
-    void editContentsSavedSignal(QString);
+    void editContentsChangedSignal(QString);    // 编辑器内容发生变化，参数为文件title
+    void editContentsSavedSignal(QString);      // 编辑器内容保存信号，参数为文件title
 
 public slots:
     void openFileSlots();
@@ -48,6 +52,12 @@ private:
     void initWindowStatus();
     void initComponet();
     void initFileStatus();
+    bool readFile(QString);
+    bool writeFile(QString, int);
+
+protected:
+    void dragEnterEvent(QDragEnterEvent*);
+    void dropEvent(QDropEvent*);
 
 };
 

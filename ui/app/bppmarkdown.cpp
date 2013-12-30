@@ -23,9 +23,14 @@ void BppMarkDown::hideEvent(QHideEvent *)
 
 void BppMarkDown::initWindowStatus()
 {
+    // 设置使用父组件背景
     this->setAutoFillBackground(true);
 
+    // 设置背景透明
     this->setStyleSheet(APP_WINDOW_BACKGROUND_TRANSPARENT);
+
+    // 设置不接受默认的拖拽
+    this->setAcceptDrops(false);
 }
 
 /**
