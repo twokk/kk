@@ -15,6 +15,7 @@ QString FileInfo::getFileTitle()
 
 /**
 * 设置文件标题
+* @fileTitle 文件标题
 */
 void FileInfo::setFileTitle(QString fileTitle)
 {
@@ -31,6 +32,7 @@ QString FileInfo::getMarkdownFileName()
 
 /**
 * 设置markdown文件名称
+* @fileName markdown文件名称
 */
 void FileInfo::setMarkdownFileName(QString fileName)
 {
@@ -47,6 +49,7 @@ QString FileInfo::getHtmlFileName()
 
 /**
 * 设置html文件名称
+* @fileName HTML文件名称
 */
 void FileInfo::setHtmlFileName(QString fileName)
 {
@@ -63,6 +66,7 @@ QString FileInfo::getMarkdownFileFullName()
 
 /**
 * 设置markdown全路径名称
+* @fileFullName markdown全路径名称
 */
 void FileInfo::setMarkdownFileFullName(QString fileFullName)
 {
@@ -79,6 +83,7 @@ QString FileInfo::getHtmlFileFullName()
 
 /**
 * 设置html全路径名称
+* @fileFullName HTML全路径名称
 */
 void FileInfo::setHtmlFileFullName(QString fileFullName)
 {
@@ -95,6 +100,7 @@ QString FileInfo::getMarkdown()
 
 /**
 * 设置markdown文本
+* @markdown markdown内容
 */
 void FileInfo::setMarkdown(QString markdown)
 {
@@ -111,10 +117,11 @@ QString FileInfo::getHtmlText()
 
 /**
 * 设置htmlText文本
+* @htmlText HTML内容
 */
-void FileInfo::setHtmlText(QString text)
+void FileInfo::setHtmlText(QString htmlText)
 {
-    this->htmlText = text;
+    this->htmlText = htmlText;
 }
 
 /**
@@ -127,6 +134,7 @@ bool FileInfo::isSaved()
 
 /**
 * 设置保存状态
+* @bSaved 是否保存
 */
 void FileInfo::setSaved(bool bSaved)
 {
@@ -143,8 +151,25 @@ bool FileInfo::isTitled()
 
 /**
 * 设置标题状体
+* @bSaved 是否设置标题
 */
 void FileInfo::setTitled(bool bTitle)
 {
     this->bTitled = bTitle;
+}
+
+/**
+* 获取html，不附带CSS
+*/
+QString FileInfo::getHtml()
+{
+    return html;
+}
+
+/**
+* 设置HTML
+*/
+void FileInfo::setHtml(QString html)
+{
+    this->html = html;
 }

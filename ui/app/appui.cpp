@@ -1,4 +1,5 @@
 ﻿#include "appui.h"
+#include "QDebug"
 
 QVBoxLayout* AppUi::layout;         // 主窗体布局
 AppDockBar* AppUi::dockBar;         // 主窗体导航栏
@@ -65,11 +66,10 @@ void AppUi::initComponent()
     this->setObjectName(APP_WINDOW_NAME_SELF_NAME);
 
     // 建立连接
-    connect(dockBar->getCloseButton(), &QToolButton::clicked, this, &AppUi::close);
     connect(dockBar->getMaximButton(), &QToolButton::clicked, this, &AppUi::showMaxRestore);
     connect(dockBar->getMinimButton(), &QToolButton::clicked, this, &AppUi::showMinimized);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::exitSignal, this, &AppUi::close);
-    connect(this, &AppUi::changeMaximButtonIcon, dockBar, &AppDockBar::changeMaximButtonIcon);
+    connect(dockBar->getCloseButton(), &QToolButton::clicked, splitter, &AppSplitter::exitSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::exitSignal, splitter, &AppSplitter::exitSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::openFileSignal, splitter, &AppSplitter::openFileSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::saveHtmlSignal, splitter, &AppSplitter::saveHtmlSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::saveAsSignal, splitter, &AppSplitter::saveAsSlots);
@@ -82,6 +82,9 @@ void AppUi::initComponent()
     connect(dockBar->getSetupMenu(), &AppSetupMenu::feedBackSignal, splitter, &AppSplitter::feedBackSlots);
     connect(splitter, &AppSplitter::editContentsChangedSignal, dockBar, &AppDockBar::editContentsChangedSlots);
     connect(splitter, &AppSplitter::editContentsSavedSignal, dockBar, &AppDockBar::editContentsSavedSlots);
+    connect(splitter, &AppSplitter::exitSignals, this, &AppUi::exitSlots);
+    connect(this, &AppUi::changeMaximButtonIcon, dockBar, &AppDockBar::changeMaximButtonIcon);
+    connect(this, &AppUi::exitSignals, splitter, &AppSplitter::exitSlots);
 }
 
 /**
@@ -97,6 +100,15 @@ void AppUi::initWindowState()
 
     // 设置无边框|任务栏系统菜单
     this->setWindowFlags( Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
+
+    // 设置鼠标跟踪
+    this->setMouseTracking(true);
+
+    // 设置不继承父窗口背景
+    this->setAutoFillBackground(true);
+
+    // 初始化时为不允许关闭窗口
+    this->allowClose = false;
 
     // 初始化为最大化窗口
     this->bIsMaxAble = true;
@@ -122,11 +134,12 @@ void AppUi::initWindowState()
 
 /**
 * 初始化样式
+* @stypeFile 样式文件
 */
-void AppUi::setupStyleSheet(QString style)
+void AppUi::setupStyleSheet(QString styleFile)
 {
     QString qss;
-    QFile qssFile(style);
+    QFile qssFile(styleFile);
     qssFile.open(QFile::ReadOnly);
     if(qssFile.isOpen())
     {
@@ -136,7 +149,7 @@ void AppUi::setupStyleSheet(QString style)
     }
 
     QPalette palette;
-    palette.setBrush(QPalette::Background, QBrush(QPixmap(":/images/blue")));
+    palette.setBrush(QPalette::Background, QBrush(QPixmap(APP_DOCK_BAR_BACKGROUND_IMAGE)));
     this->setPalette(palette);
 }
 
@@ -187,6 +200,7 @@ AppSplitter* AppUi::getSplitter()
 /*******************************************窗口事件定义****************************************************/
 /**
 * 鼠标双击事件
+* @event 事件
 */
 void AppUi::mouseDoubleClickEvent(QMouseEvent *event)
 {
@@ -200,6 +214,7 @@ void AppUi::mouseDoubleClickEvent(QMouseEvent *event)
 
 /**
 * 鼠标移动事件
+* @event 事件
 */
 void AppUi::mouseMoveEvent(QMouseEvent *event)
 {
@@ -248,6 +263,7 @@ void AppUi::mouseMoveEvent(QMouseEvent *event)
 
 /**
 * 鼠标按下事件
+* @event 事件
 */
 void AppUi::mousePressEvent(QMouseEvent *event)
 {
@@ -285,6 +301,7 @@ void AppUi::mousePressEvent(QMouseEvent *event)
 
 /**
 * 鼠标释放事件
+* @event 事件
 */
 void AppUi::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -306,6 +323,7 @@ void AppUi::mouseReleaseEvent(QMouseEvent *event)
 
 /**
 * 设置光标样式
+* @direction 方向枚举
 */
 void AppUi::setCursorStyle(enum_Direction direction)
 {
@@ -338,6 +356,9 @@ void AppUi::setCursorStyle(enum_Direction direction)
 
 /**
 * 调节窗口大小
+* @nXGlobale X全局坐标
+* @nYGlobale Y全局坐标
+* @direction 方向枚举
 */
 void AppUi::setDrayMove(int nXGlobal, int nYGlobal, enum_Direction direction)
 {
@@ -382,6 +403,8 @@ void AppUi::setDrayMove(int nXGlobal, int nYGlobal, enum_Direction direction)
 
 /**
 * 设置光标方向
+* @xXRelative X方向相对坐标
+* @nYRelative Y方向相对坐标
 */
 enum_Direction AppUi::resizeValid(int nXRelative, int nYRelative)
 {
@@ -427,4 +450,26 @@ void AppUi::showMaxRestore()
     }
 }
 
+/**
+* 窗口关闭事件
+* 当窗口关闭时，发送关闭信号
+*/
+void AppUi::closeEvent(QCloseEvent* event)
+{
+    // 如果当前不允许关闭窗口，则忽略该事件
+    emit exitSignals();
+    event->ignore();
+}
+
 /*******************************************窗口事件定义****************************************************/
+
+/**
+* 关闭窗口槽函数
+*/
+void AppUi::exitSlots(bool exit)
+{
+    if(exit)
+    {
+        qApp->exit(0);
+    }
+}

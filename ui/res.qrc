@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/skin">
-        <file alias="default.qss">skin/default.qss</file>
+        <file alias="default">skin/default.qss</file>
     </qresource>
     <qresource prefix="/images">
-        <file alias="blue">skin/blue.png</file>
-        <file alias="16">skin/16.png</file>
+        <file alias="lightblue">skin/liteblut.png</file>
+        <file alias="logo-m-t">skin/logo-m-t.ico</file>
+        <file alias="title_bg">skin/title_bg.png</file>
     </qresource>
     <qresource prefix="/script">
         <file alias="marked">script/marked.js</file>
@@ -15,5 +16,8 @@
         <file alias="normal">skin/normal.png</file>
         <file alias="setup">skin/setup.png</file>
         <file alias="close">skin/close.png</file>
+    </qresource>
+    <qresource prefix="/html">
+        <file alias="default">skin/default.html</file>
     </qresource>
 </RCC>

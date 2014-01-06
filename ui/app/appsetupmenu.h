@@ -2,6 +2,7 @@
 #define SETUPMENU_H
 
 #include <QtWidgets/QMenu>
+#include "../include/transnames.h"
 
 class AppSetupMenu : public QMenu
 {

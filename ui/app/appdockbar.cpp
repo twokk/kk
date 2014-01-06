@@ -24,10 +24,10 @@ void AppDockBar::initWindowStatus()
     // 设置鼠标跟踪
     this->setMouseTracking(true);
 
-    // 设置不继承父窗口北京
+    // 继承父组件背景
     this->setAutoFillBackground(true);
 
-    // 设置背景透明
+    // 设置北京透明
     this->setStyleSheet(APP_WINDOW_BACKGROUND_TRANSPARENT);
 }
 
@@ -44,7 +44,7 @@ void AppDockBar::initWindowComponent()
 
     vLayout->setMargin(0);
     titleLayout->setMargin(5);
-    toolsLayout->setMargin(5);
+    toolsLayout->setMargin(0);
 
     vLayout->setSpacing(0);
     titleLayout->setSpacing(0);
@@ -78,11 +78,11 @@ void AppDockBar::initWindowComponent()
 
     textLabel = new QLabel();
     textLabel->setObjectName(APP_DOCK_BAR_NAME_TEXT_LABEL);
-    textLabel->setText(APP_DOCK_BAR_TRANS_NAMES_TEXT_LABEL);
+    textLabel->setText("*" + APP_DOCK_BAR_TRANS_NAMES_TEXT_LABEL + APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL);
 
     titleLabel = new QLabel();
     titleLabel->setObjectName(APP_DOCK_BAR_NAME_TITLE_LABEL);
-    titleLabel->setText(APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL);
+    titleLabel->setText(APP_DOCK_BAR_TRANS_NAMES_BLANK);
 
     setupMenu = new AppSetupMenu();
     setupMenu->setObjectName(APP_DOCK_BAR_NAME_SETUP_MENU);
@@ -109,10 +109,11 @@ void AppDockBar::initWindowComponent()
 
 /**
 * 设置文本内容
+* @content 在标题栏上显示文件名
 */
-void AppDockBar::setTextContent(QString content)
+void AppDockBar::setTextContent(QString fileName)
 {
-    this->textLabel->setText(content);
+    this->textLabel->setText(fileName);
 }
 
 /**
@@ -160,22 +161,25 @@ AppSetupMenu* AppDockBar::getSetupMenu()
 
 /**
 * 编辑器内容发生变化
+* @fileName 在标题栏显示文件名称未保存状态(*)
 */
-void AppDockBar::editContentsChangedSlots(QString title)
+void AppDockBar::editContentsChangedSlots(QString fileName)
 {
-    this->textLabel->setText(title.append("*"));
+    this->textLabel->setText("*" + fileName + APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL);
 }
 
 /**
 * 编辑器内容保存
+* @fileName
 */
-void AppDockBar::editContentsSavedSlots(QString title)
+void AppDockBar::editContentsSavedSlots(QString fileName)
 {
-    this->textLabel->setText(title);
+    this->textLabel->setText(fileName);
 }
 
 /**
 * 更换最大化图标
+* @maxim 是否最大化状态
 */
 void AppDockBar::changeMaximButtonIcon(bool maxim)
 {

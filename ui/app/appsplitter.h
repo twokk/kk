@@ -30,10 +30,12 @@ private:
     BppMarkDown* markDown;   // Markdown编辑器
     FileInfo* fileInfo;      // 文件信息
     AppScript script;        // 解析markdown
+    QString htmlTemplate;    // html模板
 
 signals:
     void editContentsChangedSignal(QString);    // 编辑器内容发生变化，参数为文件title
     void editContentsSavedSignal(QString);      // 编辑器内容保存信号，参数为文件title
+    void exitSignals(bool);
 
 public slots:
     void openFileSlots();
@@ -47,13 +49,18 @@ public slots:
     void aboutSlots();
     void feedBackSlots();
     void editContentsChangedSlots();
+    void exitSlots();
 
 private:
     void initWindowStatus();
     void initComponet();
     void initFileStatus();
+    void initHtmlTemplate();
     bool readFile(QString);
     bool writeFile(QString, int);
+    void setBrowserHtml();
+    QString genBrowserHtml();
+    QString genHtml();
 
 protected:
     void dragEnterEvent(QDragEnterEvent*);

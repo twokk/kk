@@ -16,33 +16,33 @@ void AppSetupMenu::initSetMenu()
 
 void AppSetupMenu::initActions()
 {
-    editPost = new QAction(QObject::tr("Editor View"), this);
-    editPost->setShortcut(QObject::tr("Ctrl+E"));
-    prePost = new QAction(QObject::tr("Preview View(P)"), this);
-    prePost->setShortcut(QObject::tr("Ctrl+P"));
-    doubleView = new QAction(QObject::tr("Double View(D)"), this);
-    doubleView->setShortcut(QObject::tr("Ctrl+D"));
-    pubPost = new QAction(QObject::tr("Publish Post(T)"), this);
-    pubPost->setShortcut(QObject::tr("Ctrl+T"));
-    find = new QAction(QObject::tr("Find(F)"), this);
-    find->setShortcut(QObject::tr("Ctrl+F"));
-    print = new QAction(QObject::tr("Print(P)"), this);
-    print->setShortcut(QObject::tr("Ctrl+Alt+P"));
-    open = new QAction(QObject::tr("Open(O)"), this);
-    open->setShortcut(QObject::tr("Ctrl+O"));
-    save = new QAction(QObject::tr("Save(S)"), this);
-    save->setShortcut(QObject::tr("Ctrl+S"));
-    saveAs = new QAction(QObject::tr("Save As"), this);
-    saveToHtml = new QAction(QObject::tr("Save To Html(H)"), this);
-    saveToHtml->setShortcut(QObject::tr("Ctrl+H"));
-    syncPost = new QAction(QObject::tr("Sync To Clound"), this);
-    setAccount = new QAction(QObject::tr("Set Your Account"), this);
-    setAction = new QAction(QObject::tr("Setting"), this);
-    about = new QAction(QObject::tr("About"), this);
-    feedBack = new QAction(QObject::tr("Feed Back"), this);
-    help = new QAction(QObject::tr("Help"), this);
-    exit = new QAction(QObject::tr("Exit(X)"), this);
-    exit->setShortcut(QObject::tr("Ctrl+X"));
+    editPost = new QAction(APP_SETUP_MENU_EDIT_POST, this);
+    editPost->setShortcut(APP_SHOT_CUT_EDIT_POST);
+    prePost = new QAction(APP_SETUP_MENU_PRE_POST, this);
+    prePost->setShortcut(APP_SHOT_CUT_PREVIEW_VIEW);
+    doubleView = new QAction(APP_SETUP_MENU_DOUBLE_VIEW, this);
+    doubleView->setShortcut(APP_SHOT_CUT_DOUBLE_VIEW);
+    pubPost = new QAction(APP_SETUP_MENU_PUB_POST, this);
+    pubPost->setShortcut(APP_SHOT_CUT_PUBLISH_POST);
+    find = new QAction(APP_SETUP_MENU_FIND, this);
+    find->setShortcut(APP_SHOT_CUT_FIND);
+    print = new QAction(APP_SETUP_MENU_PRINT, this);
+    print->setShortcut(APP_SHOT_CUT_PRINT);
+    open = new QAction(APP_SETUP_MENU_OPEN, this);
+    open->setShortcut(APP_SHOT_CUT_OPEN);
+    save = new QAction(APP_SETUP_MENU_SAVE, this);
+    save->setShortcut(APP_SHOT_CUT_SAVE);
+    saveAs = new QAction(APP_SETUP_MENU_SAVE_AS, this);
+    saveToHtml = new QAction(APP_SETUP_MENU_TO_HTML, this);
+    saveToHtml->setShortcut(APP_SHOT_CUT_SAVE_TO_HTML);
+    syncPost = new QAction(APP_SETUP_MENU_SYNC_POST, this);
+    setAccount = new QAction(APP_SETUP_MENU_SET_ACCOUNT, this);
+    setAction = new QAction(APP_SETUP_MENU_SET_ACTION, this);
+    about = new QAction(APP_SETUP_MENU_ABOUT, this);
+    feedBack = new QAction(APP_SETUP_MENU_FEED_BACK, this);
+    help = new QAction(APP_SETUP_MENU_HELP, this);
+    exit = new QAction(APP_SETUP_MENU_EXIT, this);
+    exit->setShortcut(APP_SHOT_CUT_EXIT);
 
     addAction(doubleView);
     addAction(editPost);
@@ -79,6 +79,9 @@ void AppSetupMenu::initActions()
     connect(exit, &QAction::triggered, this, &AppSetupMenu::exitSlots);
 }
 
+/**
+* 菜单显示事件
+*/
 void AppSetupMenu::showEvent(QShowEvent *)
 {
     emit setupMenuShowSignal();

@@ -3,11 +3,11 @@
 # Project created by QtCreator 2013-12-11T21:55:16
 #
 #-------------------------------------------------
+TEMPLATE = app
+
+TARGET = markplus
 
 QT       += core widgets webkitwidgets
-
-TARGET = ui
-TEMPLATE = lib
 
 DEFINES += UI_LIBRARY
 
@@ -43,7 +43,8 @@ HEADERS += \
     include/buildnames.h \
     include/transnames.h \
     app/ui_global.h \
-    script/appscript.h
+    script/appscript.h \
+    app/appcontrol.h
 
 SOURCES += \
     app/appdockbar.cpp \
@@ -55,7 +56,9 @@ SOURCES += \
     base/basestatusbar.cpp \
     base/basetoolbar.cpp \
     model/fileinfo.cpp \
-    script/appscript.cpp
+    script/appscript.cpp \
+    main.cpp \
+    app/appcontrol.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/v8/release/ -lv8_base.ia32
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/v8/debug/ -lv8_base.ia32
@@ -63,3 +66,7 @@ else:unix: LIBS += -L$$PWD/../lib/v8/ -lv8_base.ia32
 
 INCLUDEPATH += $$PWD/../lib/v8/release
 DEPENDPATH += $$PWD/../lib/v8/release
+
+TRANSLATIONS = lang_zh_CN.ts
+
+RC_ICONS = logo-m.ico

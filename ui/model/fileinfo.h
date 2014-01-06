@@ -15,6 +15,7 @@ public:
     QString getHtmlFileFullName();
     QString getMarkdown();
     QString getHtmlText();
+    QString getHtml();
     bool isSaved();
     bool isTitled();
     void setFileTitle(QString);
@@ -24,6 +25,7 @@ public:
     void setHtmlFileFullName(QString);
     void setMarkdown(QString);
     void setHtmlText(QString);
+    void setHtml(QString);
     void setFileStatus(int);
     void setSaved(bool);
     void setTitled(bool);
@@ -39,6 +41,7 @@ private:
     QString markdownFileFullName;
     QString htmlFileFullName;
     QString markdown;
+    QString html;
     QString htmlText;
     bool bSaved;
     bool bTitled;

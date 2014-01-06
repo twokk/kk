@@ -5,6 +5,9 @@
 #include <QSize>
 #include <QPoint>
 #include <math.h>
+#include <QLocale>
+#include <QCloseEvent>
+#include <QTranslator>
 #include <QtWidgets/QWidget>
 #include <QPalette>
 #include <QMouseEvent>
@@ -16,13 +19,12 @@
 #include "appstatusbar.h"
 #include "../include/appparam.h"
 #include "../include/buildnames.h"
-#include "ui_global.h"
 
 /**
 * 主窗体，所有组件和窗体拖动，大小操作均针对该组件定义
 */
 
-class UISHARED_EXPORT AppUi : public QWidget
+class AppUi : public QWidget
 {
     Q_OBJECT
 public:
@@ -38,6 +40,7 @@ private:
     bool bIsMoving;                 // 是否正在移动
     bool bIsResizing;               // 是否正在调整大小
     bool bIsMaxAble;                // 是否最大化
+    bool allowClose;                // 允许关闭窗口
     enum_Direction eDirection;      // 调节大小的光标方向
     QRect rRestoreWindow;           // 保存非最大化时窗体尺寸
     QPoint pPressPoint;             // 鼠标按下时的位置
@@ -45,8 +48,10 @@ private:
 
 signals:
     void changeMaximButtonIcon(bool);
+    void exitSignals();
 public slots:
     void showMaxRestore();
+    void exitSlots(bool);
 
 private:
     void initComponent();
@@ -66,6 +71,9 @@ public:
     static AppDockBar* getDockBar();
     static AppSplitter* getSplitter();
     static AppStatusBar* getStatusBar();
+
+protected:
+    void closeEvent(QCloseEvent*);
 
 };
 

@@ -7,6 +7,7 @@ AppSplitter::AppSplitter(QWidget *parent) :
     initFileStatus();
     initWindowStatus();
     initComponet();
+    initHtmlTemplate();
 }
 
 /**
@@ -51,12 +52,6 @@ void AppSplitter::initComponet()
     // 禁止浏览器拖拽
     browser->setAcceptDrops(false);
 
-    // 初始化编辑器内容
-    markDown->setPlainText("##Welcome!");
-
-    // 初始化浏览器内容
-    browser->setHtml(script.markdownToHtml(markDown->toPlainText()));
-
     // 建立信号槽连接
     connect(markDown, &BppMarkDown::textChanged, this, &AppSplitter::editContentsChangedSlots);
 }
@@ -71,7 +66,7 @@ void AppSplitter::initFileStatus()
     // 设置文件状态
     fileInfo->setSaved(false);
     fileInfo->setTitled(false);
-    fileInfo->setFileTitle(FILE_STATUS_DEFAULT_FILE_TITLE);
+    fileInfo->setFileTitle(APP_DOCK_BAR_TRANS_NAMES_TEXT_LABEL);
     fileInfo->setMarkdownFileName("");
     fileInfo->setMarkdownFileFullName("");
     fileInfo->setHtmlFileFullName("");
@@ -86,16 +81,27 @@ void AppSplitter::initFileStatus()
 */
 void AppSplitter::openFileSlots()
 {
-    QString fileFullName = QFileDialog::getOpenFileName(this, tr(FILE_OPERATE_OPEN_FILE_TITLE), "D:\\", FILE_OPERATE_OPEN_FILE_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+    // 如果文件全路径名不为空，则先保存。
+    if(!fileInfo->getMarkdown().isEmpty() && !fileInfo->getMarkdownFileFullName().isEmpty())
+    {
+        writeFile(fileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN);
+    }
+
+    // 文件名为空，则弹出打开对话框
+    QString fileFullName = QFileDialog::getOpenFileName(this, FILE_OPERATE_OPEN_FILE_TITLE, "D:\\", FILE_OPERATE_OPEN_FILE_EXTEND, 0, QFileDialog::DontUseNativeDialog);
     if(!fileFullName.isEmpty() && readFile(fileFullName)) {
+
         // 更新编辑器
         markDown->setPlainText(fileInfo->getMarkdown());
 
         // 更新预览
-        browser->setHtml(fileInfo->getHtmlText());
+        setBrowserHtml();
 
         // 激发编辑器内容保存信号
         emit editContentsSavedSignal(fileInfo->getFileTitle());
+
+        // 更新文件状态为保存
+        fileInfo->setSaved(true);
     }
 }
 
@@ -106,7 +112,7 @@ void AppSplitter::saveHtmlSlots()
 {
     if(fileInfo->getHtmlFileFullName().isEmpty())
     {
-        QString fileFullName = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_TO_HTML_TITLE), ".", FILE_OPERATE_SAVE_TO_HTML_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+        QString fileFullName = QFileDialog::getSaveFileName(this, FILE_OPERATE_SAVE_TO_HTML_TITLE, ".", FILE_OPERATE_SAVE_TO_HTML_EXTEND, 0, QFileDialog::DontUseNativeDialog) + FILE_STATUS_MARKDOWN_EXTENSION_HTML;
         // 保存html文件
         writeFile(fileFullName, FILE_STATUS_TYPE_HTML);
     }
@@ -124,9 +130,10 @@ void AppSplitter::saveMarkdownSlots()
 {
     if(fileInfo->getMarkdownFileFullName().isEmpty())
     {
-        QString fileFullName = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE), ".", FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+        QString fileFullName = QFileDialog::getSaveFileName(this, FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE, ".", FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND, 0, QFileDialog::DontUseNativeDialog);
         // 保存markdown文件
-        if(!fileFullName.isEmpty() && writeFile(fileFullName, FILE_STATUS_TYPE_MARKDOWN)) {
+        if(!fileFullName.isEmpty() && writeFile(fileFullName, FILE_STATUS_TYPE_MARKDOWN))
+        {
             // 激发编辑器内容保存信号
             emit editContentsSavedSignal(fileInfo->getFileTitle());
         }
@@ -143,7 +150,7 @@ void AppSplitter::saveMarkdownSlots()
 */
 void AppSplitter::saveAsSlots()
 {
-    QString fileFullName = QFileDialog::getSaveFileName(this, tr(FILE_OPERATE_SAVE_AS), ".", FILE_OPERATE_SAVE_AS_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+    QString fileFullName = QFileDialog::getSaveFileName(this, FILE_OPERATE_SAVE_AS, ".", FILE_OPERATE_SAVE_AS_EXTEND, 0, QFileDialog::DontUseNativeDialog);
     if(!fileFullName.isEmpty() && writeFile(fileFullName, FILE_STATUS_TYPE_OTHER))
     {
         // 激发编辑器内容保存信号
@@ -190,7 +197,7 @@ void AppSplitter::doubleViewSlots()
 */
 void AppSplitter::helpSlots()
 {
-    QMessageBox::information(NULL, "Help", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    QMessageBox::information(NULL, APP_SETUP_MENU_HELP, "<H2>Help</h2><h3>QQ Group:348234568        </h3><br>", QMessageBox::Ok);
 }
 
 /**
@@ -198,7 +205,7 @@ void AppSplitter::helpSlots()
 */
 void AppSplitter::aboutSlots()
 {
-    QMessageBox::information(NULL, "About", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    QMessageBox::information(NULL, APP_SETUP_MENU_ABOUT, "<h2>Version : Markplus 0.5.2</h2><h4>QQ Group:348234568</h4><br/>", QMessageBox::Ok);
 }
 
 /**
@@ -206,7 +213,7 @@ void AppSplitter::aboutSlots()
 */
 void AppSplitter::feedBackSlots()
 {
-    QMessageBox::information(NULL, "Feed Back", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    QMessageBox::information(NULL, APP_SETUP_MENU_FEED_BACK, "<h2>Feed Back</h2><h3>QQ Group:348234568        </h3><br/>", QMessageBox::Ok);
 }
 /*******************************************响应设置菜单槽函数***********************************************/
 
@@ -218,14 +225,11 @@ void AppSplitter::editContentsChangedSlots()
     // 更新文件markdown内容
     this->fileInfo->setMarkdown(markDown->toPlainText());
 
-    // 更新文件htmlText内容
-    this->fileInfo->setHtmlText(script.markdownToHtml(markDown->toPlainText()));
-
     // 更新文件保存状态
     this->fileInfo->setSaved(false);
 
-    // 更新browser内容
-    this->browser->setHtml(fileInfo->getHtmlText());
+    // 更新预览内容
+    setBrowserHtml();
 
     // 激发编辑器内容发生变化信号
     emit editContentsChangedSignal(fileInfo->getFileTitle());
@@ -245,9 +249,24 @@ void AppSplitter::dragEnterEvent(QDragEnterEvent *event)
 
 /**
 * 放下文件事件
+* @event 事件
 */
 void AppSplitter::dropEvent(QDropEvent *event)
 {
+    // 询问是否保存文件
+    if(fileInfo->getMarkdownFileFullName().isEmpty()
+            && QMessageBox::question(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes)
+    {
+        return;
+    }
+
+    // 保存已经存在的文件
+    if(!fileInfo->getMarkdownFileFullName().isEmpty())
+    {
+        writeFile(fileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN);
+    }
+
+    // 加载拖拽文件
     QList<QUrl> urls = event->mimeData()->urls();
 
     if(urls.isEmpty())
@@ -270,6 +289,7 @@ void AppSplitter::dropEvent(QDropEvent *event)
 
 /**
 * 读取文件
+* @fileFullName 文件的全路径名称
 */
 bool AppSplitter::readFile(QString fileFullName)
 {
@@ -280,7 +300,7 @@ bool AppSplitter::readFile(QString fileFullName)
 
         // 打开文件失败
         if (!file.open(QIODevice::ReadOnly|QIODevice::WriteOnly|QIODevice::Text)) {
-            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
+            QMessageBox::critical(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_CAN_NOT_CREATE_FILE);
             return false;
         }
 
@@ -310,8 +330,8 @@ bool AppSplitter::readFile(QString fileFullName)
 
 /**
 * 写文件
-* @fileFullName
-* @type 1:markdown,2:html
+* @fileFullName 文件全路径名称
+* @type 写文件类型，1:markdown,2:html
 */
 bool AppSplitter::writeFile(QString fileFullName, int type)
 {
@@ -320,7 +340,7 @@ bool AppSplitter::writeFile(QString fileFullName, int type)
 
         // 打开文件失败
         if (!file.open(QIODevice::WriteOnly|QIODevice::Text)) {
-            QMessageBox::critical(NULL, tr(FILE_OPERATE_SHOW_NOTE), tr(FILE_OPERATE_CAN_NOT_CREATE_FILE));
+            QMessageBox::critical(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_CAN_NOT_CREATE_FILE);
             return false;
         }
 
@@ -329,6 +349,12 @@ bool AppSplitter::writeFile(QString fileFullName, int type)
         // 保存markdown
         if(type == FILE_STATUS_TYPE_MARKDOWN || type == FILE_STATUS_TYPE_OTHER)
         {
+            // 如果文件不是以.md|.markdown，则追加结尾
+            if(type == FILE_STATUS_TYPE_MARKDOWN && !fileFullName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MD) && !fileFullName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN))
+            {
+                fileFullName = fileFullName + FILE_STATUS_MARKDOWN_EXTENSION_MD;
+            }
+
             QFileInfo info(fileFullName);
             // 更新文件标题
             fileInfo->setFileTitle(info.filePath());
@@ -351,7 +377,7 @@ bool AppSplitter::writeFile(QString fileFullName, int type)
         else if(type == FILE_STATUS_TYPE_HTML)
         {
             // 写文件内容到输出流
-            out << fileInfo->getHtmlText();
+            out << fileInfo->getHtml();
         }
 
         out.flush();
@@ -361,4 +387,147 @@ bool AppSplitter::writeFile(QString fileFullName, int type)
     }
 
     return false;
+}
+
+/**
+* 加载html模板
+*/
+void AppSplitter::initHtmlTemplate()
+{
+    QFile htmlTemp(HTML_TEMPLATE_DEFAULT);
+
+    // 打开文件失败
+    if (!htmlTemp.open(QIODevice::ReadOnly|QIODevice::Text)) {
+        QMessageBox::critical(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_CAN_NOT_OPEN_FILE);
+        return;
+    }
+
+    QTextStream in(&htmlTemp);
+
+    htmlTemplate = in.readAll();
+
+    htmlTemp.close();;
+}
+
+/**
+* 为浏览器设置HTML
+*/
+void AppSplitter::setBrowserHtml()
+{
+    QString htmlTmp = genBrowserHtml();
+
+    // 更新fileInfo
+    fileInfo->setHtmlText(htmlTmp);
+
+    // 将填充好的模板写入到browser
+    browser->setHtml(htmlTmp);
+}
+
+/**
+* 将 markdown编译后的html作为参数写入HTML模板
+*/
+QString AppSplitter::genBrowserHtml()
+{
+    return htmlTemplate.arg(genHtml());
+}
+
+/**
+* 生成html，不附带css
+*/
+QString AppSplitter::genHtml()
+{
+    QString html = script.markdownToHtml(markDown->toPlainText());
+    // 更新fileInfo
+    fileInfo->setHtml(html);
+
+    return html;
+}
+
+/**
+* 程序退出
+*/
+void AppSplitter::exitSlots()
+{
+    qDebug() << "aaaaaaaaaaa" << fileInfo->getMarkdownFileFullName() << "  " << fileInfo->getMarkdown() << "   " << fileInfo->isSaved();
+
+    // 文件名不为空&&未保存，提醒是否保存，可直接保存
+    if(!fileInfo->getMarkdownFileFullName().isEmpty() && !fileInfo->isSaved())
+    {
+        // 询问用户是否保存文件
+        QMessageBox::StandardButton sb = QMessageBox::information(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel, QMessageBox::Yes);
+
+        // 用户要求保存文件
+        if(sb == QMessageBox::Yes)
+        {
+            writeFile(fileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN);
+
+            // 关闭窗口
+            emit exitSignals(true);
+        }
+        else if(sb == QMessageBox::No)
+        {
+            // 关闭窗口
+            emit exitSignals(true);
+        }
+        else if(sb == QMessageBox::Cancel)
+        {
+            // 取消关闭
+            emit exitSignals(false);
+        }
+
+        return;
+    }
+    else if(!fileInfo->getMarkdownFileFullName().isEmpty() && fileInfo->isSaved())
+    {
+        emit exitSignals(true);
+
+        return;
+    }
+
+
+    // 文件为空&&文件名为空，不需要保存
+    if(fileInfo->getMarkdown().isEmpty() && fileInfo->getMarkdownFileFullName().isEmpty())
+    {
+        // 关闭窗口
+        emit exitSignals(true);
+
+        return;
+    }
+
+    // 文件不为空&&文件名为空，需要新建保存文件
+    if(!fileInfo->getMarkdown().isEmpty() && fileInfo->getMarkdownFileFullName().isEmpty())
+    {
+        // 询问用户是否保存文件
+        QMessageBox::StandardButton sb = QMessageBox::information(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel, QMessageBox::Yes);
+
+        // 保存文件
+        if(sb == QMessageBox::Yes)
+        {
+            // 弹出保存对话
+            QString fileFullName = QFileDialog::getSaveFileName(this, FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE, ".", FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+            qDebug() << fileFullName;
+            if(!fileFullName.isEmpty() && writeFile(fileFullName + FILE_STATUS_MARKDOWN_EXTENSION_MD, FILE_STATUS_TYPE_MARKDOWN))
+            {
+                // 关闭窗口
+                emit exitSignals(true);
+            }
+            else
+            {
+                // 用户取消了保存文件，取消关闭窗口
+                emit exitSignals(false);
+            }
+        }
+        else if(sb == QMessageBox::No)
+        {
+            // 不保存文件，关闭窗口
+            emit exitSignals(true);
+        }
+        else if(sb == QMessageBox::Cancel)
+        {
+            // 取消关闭
+            emit exitSignals(false);
+        }
+
+        return;
+    }
 }

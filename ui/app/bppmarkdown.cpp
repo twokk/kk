@@ -35,6 +35,7 @@ void BppMarkDown::initWindowStatus()
 
 /**
 * BppMarkDownBase构造函数
+* @Qparent
 */
 BppMarkDownBase::BppMarkDownBase(QWidget *parent) :
     QPlainTextEdit(parent),
@@ -58,6 +59,7 @@ BppMarkDownBase::~BppMarkDownBase()
 
 /**
 * 绘制MarkDown边框, 当BppMarkDownBorder被绘制时调用
+* @event 事件
 */
 void BppMarkDownBase::borderPaintEvent(QPaintEvent *event)
 {
@@ -102,6 +104,7 @@ int BppMarkDownBase::borderWidth() const
 
 /**
 * 更新边框宽度
+* @newBlockCount 边框宽度
 */
 void BppMarkDownBase::updateBorderWidth(int newBlockCount)
 {
@@ -112,6 +115,8 @@ void BppMarkDownBase::updateBorderWidth(int newBlockCount)
 
 /**
 * 更新边框
+* @r
+* @dy
 */
 void BppMarkDownBase::updateBorder(const QRect &r, int dy)
 {
@@ -155,6 +160,7 @@ void BppMarkDownBase::hightLightCurrentLine()
 
 /**
 * 调整大小事件
+* @event 事件
 */
 void BppMarkDownBase::resizeEvent(QResizeEvent *event)
 {
@@ -167,6 +173,7 @@ void BppMarkDownBase::resizeEvent(QResizeEvent *event)
 
 /**
 * BppMarkDownBorder构造函数
+* @parent
 */
 BppMarkDownBorder::BppMarkDownBorder(BppMarkDownBase *parent) :
     QWidget(parent),
@@ -193,6 +200,7 @@ QSize BppMarkDownBorder::sizeHint() const
 
 /**
 * 绘图事件
+* @event
 */
 void BppMarkDownBorder::paintEvent(QPaintEvent *event)
 {

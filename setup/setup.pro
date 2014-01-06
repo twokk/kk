@@ -21,3 +21,10 @@ INCLUDEPATH += $$PWD/../lib/v8/release \
             += $$PWD/../lib/v8/debug
 DEPENDPATH += $$PWD/../lib/v8/release \
             $$PWD/../lib/v8/debug
+
+RC_ICONS = ui.ico
+
+OTHER_FILES +=
+
+RESOURCES += \
+    res.qrc
