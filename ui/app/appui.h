@@ -14,6 +14,7 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
+#include "appproxy.h"
 #include "appdockbar.h"
 #include "appsplitter.h"
 #include "appstatusbar.h"
@@ -31,6 +32,7 @@ public:
     explicit AppUi(QWidget *parent = 0);
 
 private:
+    AppProxy* proxy;                // 事件代理
     static QVBoxLayout* layout;     // 主窗体布局
     static AppDockBar* dockBar;     // 主窗体导航栏
     static AppSplitter* splitter;   // 主分隔栏

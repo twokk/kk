@@ -25,42 +25,27 @@ class AppSplitter : public QSplitter
 public:
     explicit AppSplitter(QWidget *parent = 0);
 
+    void setMarkdown(QString);
+    void setBrowserHtml(QString);
+    void setPrevewMode();
+    void setEditMode();
+    void setDoubleMode();
+    QString getMarkdown();
+
 private:
     QWebView* browser;       // 预览窗口
     BppMarkDown* markDown;   // Markdown编辑器
-    FileInfo* fileInfo;      // 文件信息
-    AppScript script;        // 解析markdown
-    QString htmlTemplate;    // html模板
 
 signals:
-    void editContentsChangedSignal(QString);    // 编辑器内容发生变化，参数为文件title
-    void editContentsSavedSignal(QString);      // 编辑器内容保存信号，参数为文件title
-    void exitSignals(bool);
+    void textChangedSignal();           // 编辑器内容发生变化，参数为文件title
+    void dropMarkdownSignal(QString);   // 放下markdown文件，参数为文件名
 
 public slots:
-    void openFileSlots();
-    void saveHtmlSlots();
-    void saveAsSlots();
-    void saveMarkdownSlots();
-    void previewSlots();
-    void editViewSlots();
-    void doubleViewSlots();
-    void helpSlots();
-    void aboutSlots();
-    void feedBackSlots();
-    void editContentsChangedSlots();
-    void exitSlots();
+    void textChangedSlots();
 
 private:
     void initWindowStatus();
     void initComponet();
-    void initFileStatus();
-    void initHtmlTemplate();
-    bool readFile(QString);
-    bool writeFile(QString, int);
-    void setBrowserHtml();
-    QString genBrowserHtml();
-    QString genHtml();
 
 protected:
     void dragEnterEvent(QDragEnterEvent*);

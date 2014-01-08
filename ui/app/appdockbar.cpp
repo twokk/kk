@@ -160,24 +160,6 @@ AppSetupMenu* AppDockBar::getSetupMenu()
 }
 
 /**
-* 编辑器内容发生变化
-* @fileName 在标题栏显示文件名称未保存状态(*)
-*/
-void AppDockBar::editContentsChangedSlots(QString fileName)
-{
-    this->textLabel->setText("*" + fileName + APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL);
-}
-
-/**
-* 编辑器内容保存
-* @fileName
-*/
-void AppDockBar::editContentsSavedSlots(QString fileName)
-{
-    this->textLabel->setText(fileName);
-}
-
-/**
 * 更换最大化图标
 * @maxim 是否最大化状态
 */
@@ -191,5 +173,24 @@ void AppDockBar::changeMaximButtonIcon(bool maxim)
     else // 设置向下还原图标
     {
         maximButton->setIcon(QIcon(APP_DOCK_BAR_TRANS_NAMES_NORMAL_BUTTON));
+    }
+}
+
+/**
+* 更新标题栏内容
+* @titleText
+* @是否保存
+*/
+void AppDockBar::updateTitleText(QString titleText, bool isSaved)
+{
+    if(isSaved)
+    {
+        // 保存状态
+        this->textLabel->setText(titleText);
+    }
+    else
+    {
+        // 非保存状态
+        this->textLabel->setText("*" + titleText + APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL);
     }
 }

@@ -46,9 +46,12 @@ void AppUi::initComponent()
 
     if(NULL == statusBar)
     {
+        qDebug() << "ssssssssss";
         statusBar = new AppStatusBar();
         statusBar->setObjectName(APP_WINDOW_NAME_STATUS_BAR);
     }
+
+    proxy = new AppProxy(dockBar, splitter, statusBar);
 
     // 添加导航栏
     this->layout->addWidget(dockBar);
@@ -66,25 +69,22 @@ void AppUi::initComponent()
     this->setObjectName(APP_WINDOW_NAME_SELF_NAME);
 
     // 建立连接
-    connect(dockBar->getMaximButton(), &QToolButton::clicked, this, &AppUi::showMaxRestore);
-    connect(dockBar->getMinimButton(), &QToolButton::clicked, this, &AppUi::showMinimized);
-    connect(dockBar->getCloseButton(), &QToolButton::clicked, splitter, &AppSplitter::exitSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::exitSignal, splitter, &AppSplitter::exitSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::openFileSignal, splitter, &AppSplitter::openFileSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveHtmlSignal, splitter, &AppSplitter::saveHtmlSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveAsSignal, splitter, &AppSplitter::saveAsSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveMarkdownSignal, splitter, &AppSplitter::saveMarkdownSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::previewSignal, splitter, &AppSplitter::previewSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::editViewSignal, splitter, &AppSplitter::editViewSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::doubleViewSignal, splitter, &AppSplitter::doubleViewSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::helpSignal, splitter, &AppSplitter::helpSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::aboutSignal, splitter, &AppSplitter::aboutSlots);
-    connect(dockBar->getSetupMenu(), &AppSetupMenu::feedBackSignal, splitter, &AppSplitter::feedBackSlots);
-    connect(splitter, &AppSplitter::editContentsChangedSignal, dockBar, &AppDockBar::editContentsChangedSlots);
-    connect(splitter, &AppSplitter::editContentsSavedSignal, dockBar, &AppDockBar::editContentsSavedSlots);
-    connect(splitter, &AppSplitter::exitSignals, this, &AppUi::exitSlots);
-    connect(this, &AppUi::changeMaximButtonIcon, dockBar, &AppDockBar::changeMaximButtonIcon);
-    connect(this, &AppUi::exitSignals, splitter, &AppSplitter::exitSlots);
+//    connect(dockBar->getMaximButton(), &QToolButton::clicked, this, &AppUi::showMaxRestore);
+//    connect(dockBar->getMinimButton(), &QToolButton::clicked, this, &AppUi::showMinimized);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::openFileSignal, proxy, &AppProxy::openFileSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveHtmlSignal, proxy, &AppProxy::saveHtmlSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveAsSignal, proxy, &AppProxy::saveAsSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveMarkdownSignal, proxy, &AppProxy::saveMarkdownSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::previewSignal, splitter, &AppSplitter::previewSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::editViewSignal, splitter, &AppSplitter::editViewSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::doubleViewSignal, splitter, &AppSplitter::doubleViewSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::helpSignal, splitter, &AppSplitter::helpSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::aboutSignal, splitter, &AppSplitter::aboutSlots);
+//    connect(dockBar->getSetupMenu(), &AppSetupMenu::feedBackSignal, splitter, &AppSplitter::feedBackSlots);
+//    connect(splitter, &AppSplitter::textChangedSignal, proxy, &AppProxy::textChangeSlots);
+//    connect(this, &AppUi::changeMaximButtonIcon, dockBar, &AppDockBar::changeMaximButtonIcon);
+//    connect(this, &AppUi::exitSignals, proxy, &AppProxy::exitSlots);
+//    connect(proxy, &AppProxy::exitSignals, this, &AppUi::exitSlots);
 }
 
 /**

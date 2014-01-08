@@ -44,7 +44,7 @@ HEADERS += \
     include/transnames.h \
     app/ui_global.h \
     script/appscript.h \
-    app/appcontrol.h
+    app/appproxy.h
 
 SOURCES += \
     app/appdockbar.cpp \
@@ -58,7 +58,7 @@ SOURCES += \
     model/fileinfo.cpp \
     script/appscript.cpp \
     main.cpp \
-    app/appcontrol.cpp
+    app/appproxy.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/v8/release/ -lv8_base.ia32
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/v8/debug/ -lv8_base.ia32
