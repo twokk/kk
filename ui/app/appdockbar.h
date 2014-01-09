@@ -30,6 +30,7 @@ public:
     QToolButton* getMaximButton();
     QToolButton* getMinimButton();
     void updateTitleText(QString, bool);
+    void updateMaximButtonIcon(bool);
 
 private:
     void initWindowComponent();
@@ -53,7 +54,6 @@ signals:
 public slots:
     void setTextContent(QString content);
     void setSetupMenuPos();
-    void changeMaximButtonIcon(bool);
 
 };
 

@@ -69,22 +69,22 @@ void AppUi::initComponent()
     this->setObjectName(APP_WINDOW_NAME_SELF_NAME);
 
     // 建立连接
-//    connect(dockBar->getMaximButton(), &QToolButton::clicked, this, &AppUi::showMaxRestore);
-//    connect(dockBar->getMinimButton(), &QToolButton::clicked, this, &AppUi::showMinimized);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::openFileSignal, proxy, &AppProxy::openFileSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveHtmlSignal, proxy, &AppProxy::saveHtmlSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveAsSignal, proxy, &AppProxy::saveAsSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveMarkdownSignal, proxy, &AppProxy::saveMarkdownSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::previewSignal, splitter, &AppSplitter::previewSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::editViewSignal, splitter, &AppSplitter::editViewSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::doubleViewSignal, splitter, &AppSplitter::doubleViewSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::helpSignal, splitter, &AppSplitter::helpSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::aboutSignal, splitter, &AppSplitter::aboutSlots);
-//    connect(dockBar->getSetupMenu(), &AppSetupMenu::feedBackSignal, splitter, &AppSplitter::feedBackSlots);
-//    connect(splitter, &AppSplitter::textChangedSignal, proxy, &AppProxy::textChangeSlots);
-//    connect(this, &AppUi::changeMaximButtonIcon, dockBar, &AppDockBar::changeMaximButtonIcon);
-//    connect(this, &AppUi::exitSignals, proxy, &AppProxy::exitSlots);
-//    connect(proxy, &AppProxy::exitSignals, this, &AppUi::exitSlots);
+    connect(dockBar->getMaximButton(), &QToolButton::clicked, this, &AppUi::showMaxRestore);
+    connect(dockBar->getMinimButton(), &QToolButton::clicked, this, &AppUi::showMinimized);
+    connect(dockBar->getCloseButton(), &QToolButton::clicked, proxy, &AppProxy::exitSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::openFileSignal, proxy, &AppProxy::openFileSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveHtmlSignal, proxy, &AppProxy::saveHtmlSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveAsSignal, proxy, &AppProxy::saveAsSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::saveMarkdownSignal, proxy, &AppProxy::saveMarkdownSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::previewSignal, proxy, &AppProxy::previewSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::editViewSignal, proxy, &AppProxy::editViewSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::doubleViewSignal, proxy, &AppProxy::doubleViewSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::helpSignal, proxy, &AppProxy::helpSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::aboutSignal, proxy, &AppProxy::aboutSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::feedBackSignal, proxy, &AppProxy::feedBackSlots);
+    connect(splitter, &AppSplitter::textChangedSignal, proxy, &AppProxy::textChangeSlots);
+    connect(this, &AppUi::exitSignals, proxy, &AppProxy::exitSlots);
+    connect(proxy, &AppProxy::exitSignals, this, &AppUi::exitSlots);
 }
 
 /**
@@ -435,7 +435,8 @@ void AppUi::showMaxRestore()
         // 设置最大化标志
         this->bIsMaxAble = true;
 
-        emit changeMaximButtonIcon(true);
+        // 更新最大化按钮图标
+        this->dockBar->updateMaximButtonIcon(true);
     }
     // 如果是最大化状态，则恢复到之前的大小
     else
@@ -446,7 +447,8 @@ void AppUi::showMaxRestore()
         // 设置最大化标志
         this->bIsMaxAble = false;
 
-        emit changeMaximButtonIcon(false);
+        // 更新最大化按钮图标
+        this->dockBar->updateMaximButtonIcon(false);
     }
 }
 
@@ -468,6 +470,7 @@ void AppUi::closeEvent(QCloseEvent* event)
 */
 void AppUi::exitSlots(bool exit)
 {
+    qDebug() << exit;
     if(exit)
     {
         qApp->exit(0);

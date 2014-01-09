@@ -163,7 +163,7 @@ AppSetupMenu* AppDockBar::getSetupMenu()
 * 更换最大化图标
 * @maxim 是否最大化状态
 */
-void AppDockBar::changeMaximButtonIcon(bool maxim)
+void AppDockBar::updateMaximButtonIcon(bool maxim)
 {
     // 设置最大化图标
     if(maxim)
@@ -183,10 +183,15 @@ void AppDockBar::changeMaximButtonIcon(bool maxim)
 */
 void AppDockBar::updateTitleText(QString titleText, bool isSaved)
 {
+    if(titleText.isEmpty())
+    {
+        titleText = APP_DOCK_BAR_TRANS_NAMES_TEXT_LABEL;
+    }
+
     if(isSaved)
     {
         // 保存状态
-        this->textLabel->setText(titleText);
+        this->textLabel->setText(titleText + APP_DOCK_BAR_NAME_LOGO_LABEL);
     }
     else
     {

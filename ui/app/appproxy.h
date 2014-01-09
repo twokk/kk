@@ -56,6 +56,7 @@ private:
     QString readFile();
     bool readFile(QString);
     bool writeFile(QString, int);
+    void updateBrowserHtml();   // 更新浏览器HTML内容
 
 };
 

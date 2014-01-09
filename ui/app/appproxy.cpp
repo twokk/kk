@@ -108,7 +108,7 @@ void AppProxy::openFileSlots()
 void AppProxy::saveHtmlSlots()
 {
     // 弹出保存对话框
-    QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_TO_HTML_TITLE, ".", FILE_OPERATE_SAVE_TO_HTML_EXTEND, 0, QFileDialog::DontUseNativeDialog) + FILE_STATUS_MARKDOWN_EXTENSION_HTML;
+    QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_TO_HTML_TITLE, ".", FILE_OPERATE_SAVE_TO_HTML_EXTEND, 0, QFileDialog::DontUseNativeDialog);
 
     // 保存HTML文件
     writeFile(fileFullName, FILE_STATUS_TYPE_HTML);
@@ -122,8 +122,11 @@ void AppProxy::saveAsSlots()
     QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_AS, ".", FILE_OPERATE_SAVE_AS_EXTEND, 0, QFileDialog::DontUseNativeDialog);
     if(!fileFullName.isEmpty() && writeFile(fileFullName, FILE_STATUS_TYPE_OTHER))
     {
-        // 激发编辑器内容保存信号
-        //emit textSavedSignal(memFileInfo->getFileTitle());
+        // 如果另存为格式为.md或.markdown，则设置文件为已保存
+        if(fileFullName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MD) || fileFullName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN))
+        {
+            dockBar->updateTitleText(memFileInfo->getFileTitle(), true);
+        }
     }
 }
 
@@ -161,7 +164,7 @@ void AppProxy::textChangeSlots()
     memFileInfo->setSaved(false);
 
     // 更新浏览器预览内容
-    splitter->setBrowserHtml(memFileInfo->getHtml());
+    updateBrowserHtml();
 
     // 更新标题栏内容为未保存状态
     dockBar->updateTitleText(memFileInfo->getFileTitle(), false);
@@ -206,6 +209,7 @@ void AppProxy::exitSlots()
         return;
     }
 
+    qDebug() << "aaaaa";
 
     // 文件为空&&文件名为空，不需要保存
     if(memFileInfo->getMarkdown().isEmpty() && memFileInfo->getMarkdownFileFullName().isEmpty())
@@ -215,6 +219,8 @@ void AppProxy::exitSlots()
 
         return;
     }
+
+    qDebug() << "bbbbb";
 
     // 文件不为空&&文件名为空，需要新建保存文件
     if(!memFileInfo->getMarkdown().isEmpty() && memFileInfo->getMarkdownFileFullName().isEmpty())
@@ -386,4 +392,21 @@ bool AppProxy::writeFile(QString fileFullName, int type)
     }
 
     return false;
+}
+
+/**
+* 更新浏览器内容.ps:此处可以扩展，可以添加HTML模板和CSS样式
+*/
+void AppProxy::updateBrowserHtml()
+{
+    // 如果此时漏设置markdown内容了，则补设置
+    if(memFileInfo->getMarkdown().isEmpty())
+    {
+        memFileInfo->setMarkdown(splitter->getMarkdown());
+    }
+
+    // 为浏览器设置html
+    QString html = script.markdownToHtml(memFileInfo->getMarkdown());
+
+    splitter->setBrowserHtml(html);
 }
