@@ -11,6 +11,7 @@
 #include "../include/appparam.h"
 #include "../include/buildnames.h"
 #include "../include/transnames.h"
+#include "../dialog/aboutdialog.h"
 
 class AppDockBar;
 class AppSplitter;

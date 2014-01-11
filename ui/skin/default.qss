@@ -57,6 +57,55 @@ QToolButton, #publishBtn,#newBtn,#attributeBtn {
     font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
 }
 
+/***********************dialog********************/
+#dialog_about_close_button{
+	background: #ffffff;
+	border-width: 0px;
+}
+
+#dialog_about_close_button:hover{
+	background: #f0f0f0;
+	border: 1px solid #f0f0f0;
+}
+
+#dialog_about_ok_button{
+	background: #f0f0f0;
+	border: 1px solid #ececec;
+}
+
+#dialog_about_ok_button:hover{
+	background: #ececec;
+	border: 1px solid #ececec;
+}
+
+#dialog_about_title_label, #dialog_about_ok_button{
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+}
+
+#dialog_about_head_text_label{
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size:24px;
+	font-weight:0;
+	color:#454545;
+}
+
+#dialog_about_content_text_label{
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size:14px;
+	font-weight:0;
+	line-height:25px;
+	color:#454545;
+}
+
+#dialog_about_version_info_label{
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size:16px;
+	font-weight:0;
+	line-height:25px;
+	color:#454545;
+}
+/***********************dialog********************/
+
 QToolButton:hover, #publishBtn:hover, #newBtn:hover, #attributeBtn:hover, QToolButton:checked{
     background: #1f8dd6;
     color: white;

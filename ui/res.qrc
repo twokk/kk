@@ -6,6 +6,8 @@
         <file alias="lightblue">skin/liteblut.png</file>
         <file alias="logo-m-t">skin/logo-m-t.ico</file>
         <file alias="title_bg">skin/title_bg.png</file>
+        <file alias="close_dialog">skin/close_dialog.png</file>
+        <file alias="about_icon">skin/aboutIcon.png</file>
     </qresource>
     <qresource prefix="/script">
         <file alias="marked">script/marked.js</file>

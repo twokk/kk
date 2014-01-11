@@ -29,5 +29,22 @@
 #define APP_DOCK_BAR_NAME_SETUP_MENU "app_dock_bar_name_setup_menu"
 #define APP_DOCK_BAR_NAME_SETUP_BUTTON "app_dock_bar_name_setup_button"
 
+/**
+* 关于对话框组件名称
+*/
+#define DIALOG_ABOUT_NAME_MAIN_LAYOUT "dialog_about_main_layout"
+#define DIALOG_ABOUT_NAME_TITLE_LAYOUT "dialog_about_title_layout"
+#define DIALOG_ABOUT_NAME_BODY_LAYOUT "dialog_about_body_layout"
+#define DIALOG_ABOUT_NAME_ICON_LABEL_LAYOUT "dialog_about_icon_label_layout"
+#define DIALOG_ABOUT_NAME_TEXT_LABEL_LAYOUT "dialog_about_text_layout"
+#define DIALOG_ABOUT_NAME_BUTTON_LAYOUT "dialog_about_button_layout"
+#define DIALOG_ABOUT_NAME_TITLE_LABEL "dialog_about_title_label"
+#define DIALOG_ABOUT_NAME_CLOSE_BUTTON "dialog_about_close_button"
+#define DIALOG_ABOUT_NAME_ICON_LABEL "dialog_about_icon_label"
+#define DIALOG_ABOUT_NAME_HEAD_TEXT_LABEL "dialog_about_head_text_label"
+#define DIALOG_ABOUT_NAME_VERSION_INFO_LABEL "dialog_about_version_info_label"
+#define DIALOG_ABOUT_NAME_CONTENT_TEXT_LABEL "dialog_about_content_text_label"
+#define DIALOG_ABOUT_NAME_OK_BUTTON "dialog_about_ok_button"
+#define DIALOG_ABOUT_NAME_HORIZONTAL_LINE "dialog_about_horizontal_line"
 
 #endif // BUILDNAMES_H

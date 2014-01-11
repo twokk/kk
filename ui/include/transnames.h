@@ -73,4 +73,14 @@
 #define FILE_INFO_KEY_FILE_NAME "FileName" // 文件名称
 #define FILE_INFO_KEY_MARKDOWN_FILE_FULL_NAME "MarkdownFileFullName" // markdown文件全路径名称
 
+/**
+* 关于对话框内容
+*/
+#define DIALOG_ABOUT_TITLE_TEXT QObject::tr("About") // 关于对话框标题
+#define DIALOG_ABOUT_HEAD_TEXT QObject::tr("KK v0.5.2") // 关于对话框正文标题
+#define DIALOG_ABOUT_VERSION_INFO QObject::tr("windows<br>Is the latest version.")
+#define DIALOG_ABOUT_VERSION_UPDATE_INFO QObject::tr("Please update to the latest version.")
+#define DIALOG_ABOUT_CONTENT_TEXT QObject::tr("KK is a excellent markdown editor.<br>It is built with QT and other open source software.<br><br><br>Home Page : http://www.twokk.com<br>Copyright 2013-2014 KK Plc. All rights reserved.") // 关于对话框正文内容
+#define DIALOG_ABOUT_OK_BUTN_TEXT QObject::tr("OK")  // 关于对话框OK按钮
+
 #endif // TRANSNAMES_H

@@ -45,7 +45,7 @@ HEADERS += \
     app/ui_global.h \
     script/appscript.h \
     app/appproxy.h \
-    base/basedialog.h
+    dialog/aboutdialog.h
 
 SOURCES += \
     app/appdockbar.cpp \
@@ -60,7 +60,7 @@ SOURCES += \
     script/appscript.cpp \
     main.cpp \
     app/appproxy.cpp \
-    base/basedialog.cpp
+    dialog/aboutdialog.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../lib/v8/release/ -lv8_base.ia32
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../lib/v8/debug/ -lv8_base.ia32

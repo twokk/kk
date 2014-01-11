@@ -60,7 +60,8 @@ void AppProxy::helpSlots()
 */
 void AppProxy::aboutSlots()
 {
-    QMessageBox::information(NULL, APP_SETUP_MENU_ABOUT, "<h2>Version : Markplus 0.5.2</h2><h4>QQ Group:348234568</h4><br/>", QMessageBox::Ok);
+    AboutDialog* aboutDialog = new AboutDialog();
+    aboutDialog->show();
 }
 
 /**

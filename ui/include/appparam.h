@@ -51,4 +51,19 @@ enum enum_Direction
 // HTML模板相关
 #define HTML_TEMPLATE_DEFAULT ":/html/default"
 
+// 对话框相关参数
+#define DIALOG_COMMON_TITLE_BAR_BUTTON_FIX_HEIGHT 14    // 对话框标题栏按钮固定高度
+#define DIALOG_COMMON_TITLE_BAR_BUTTON_FIX_WIDTH 14     // 对话框标题栏按钮固定宽度
+#define DIALOG_COMMON_BUTTON_FIX_HEIGHT 33  // 对话框固定高度
+#define DIALOG_COMMON_BUTTON_FIX_WIDTH 101  // 对话框固定宽度
+#define DIALOG_ABOUT_ICON_LABEL_FIX_HEIGHT 200  // 关于对话框图标固定高度
+#define DIALOG_ABOUT_ICON_LABEL_FIX_WIDTH 200   // 关于对话框图标固定宽度
+#define DIALOG_ABOUT_HEAD_TEXT_FIX_HEIGHT 25    // 关于对话框正文标题固定高度
+#define DIALOG_ABOUT_UPDATE_TEXT_FIX_HEIGHT 40  // 关于对话框更新文本固定高度
+#define DIALOG_ABOUT_CLOSE_BUTTON_ICON ":/images/close_dialog"   // 关于对话框关闭按钮图标设置
+#define DIALOG_ABOUT_ICON_LABEL_ICON ":/images/about_icon"     // 关于对话框图标标签图标
+#define DIALOG_ABOUT_FIX_HEIGHT 313         // 关于对话框固定高度
+#define DIALOG_ABOUT_FIX_WIDTH 616          // 关于对话框固定宽度
+
+
 #endif // APPPARAM_H
