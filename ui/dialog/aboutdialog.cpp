@@ -101,14 +101,14 @@ void AboutDialog::initComponent()
 
     // 对话框OK按钮
     okBtn = new QPushButton();
-    okBtn->setText(DIALOG_ABOUT_OK_BUTN_TEXT);
+    okBtn->setText(DIALOG_COMMON_TEXT_OK);
     okBtn->setObjectName(DIALOG_ABOUT_NAME_OK_BUTTON);
     okBtn->setFixedHeight(DIALOG_COMMON_BUTTON_FIX_HEIGHT);
     okBtn->setFixedWidth(DIALOG_COMMON_BUTTON_FIX_WIDTH);
 
     // 对话框关闭按钮
     closeBtn = new QToolButton();
-    closeBtn->setIcon(QIcon(DIALOG_ABOUT_CLOSE_BUTTON_ICON));
+    closeBtn->setIcon(QIcon(DIALOG_COMMON_TITLE_BAR_ICON_CLOSE_BUTTON));
     closeBtn->setObjectName(DIALOG_ABOUT_NAME_CLOSE_BUTTON);
     closeBtn->setFixedWidth(DIALOG_COMMON_TITLE_BAR_BUTTON_FIX_WIDTH);
     closeBtn->setFixedHeight(DIALOG_COMMON_TITLE_BAR_BUTTON_FIX_HEIGHT);

@@ -47,4 +47,25 @@
 #define DIALOG_ABOUT_NAME_OK_BUTTON "dialog_about_ok_button"
 #define DIALOG_ABOUT_NAME_HORIZONTAL_LINE "dialog_about_horizontal_line"
 
+/**
+* 消息对话框组件名称
+*/
+#define DIALOG_MESSAGE_NAME_MAIN_LAYOUT "dialog_message_main_layout"
+#define DIALOG_MESSAGE_NAME_TITLE_LAYOUT "dialog_message_title_layout"
+#define DIALOG_MESSAGE_NAME_BODY_LAYOUT "dialog_message_body_layout"
+#define DIALOG_MESSAGE_NAME_ICON_LAYOUT "dialog_message_icon_layout"
+#define DIALOG_MESSAGE_NAME_MSG_LAYOUT "dialog_message_msg_layout"
+#define DIALGO_MESSAGE_NAME_TEXT_LAYOUT "dialog_message_text_layout"
+#define DIALOG_MESSAGE_NAME_CHECK_LAYOUT "dialog_message_check_layout"
+#define DIALOG_MESSAGE_NAME_BUTTON_LAYOUT "dialog_messsage_button_layout"
+#define DIALOG_MESSAGE_NAME_TITLE_LABEL "dialog_message_title_label"
+#define DIALOG_MESSAGE_NAME_TITLE_CLOSE_BUTTON "dialog_message_title_close_button"
+#define DIALOG_MESSAGE_NAME_ICON_LABEL "dialog_message_icon_label"
+#define DIALOG_MESSAGE_NAME_TEXT_LABEL "dialog_message_text_label"
+#define DIALOG_MESSAGE_NAME_CHECK_LABEL "dialog_message_check_label"
+#define DIALOG_MESSAGE_NAME_YES_BUTTON "dialog_message_yes_button"
+#define DIALOG_MESSAGE_NAME_NO_BUTTON "dialog_message_no_button"
+#define DIALOG_MESSAGE_NAME_CANCEL_BUTTON "dialog_message_cancel_button"
+#define DIALOG_MESSAGE_NAME_CHECK_BOX "dialog_message_check_box"
+
 #endif // BUILDNAMES_H

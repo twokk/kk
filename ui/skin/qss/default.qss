@@ -49,6 +49,13 @@ QMenu::item:selected {
     background-color: transparent;
 }
 
+#app_dock_bar_name_text_label{
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size:12px;
+	font-weight:0;
+	color:#ffffff;
+}
+
 QToolButton, #publishBtn,#newBtn,#attributeBtn {
     background: #E0E0E0;
     color: black;
@@ -57,7 +64,7 @@ QToolButton, #publishBtn,#newBtn,#attributeBtn {
     font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
 }
 
-/***********************dialog********************/
+/***********************dialog start********************/
 #dialog_about_close_button{
 	background: #ffffff;
 	border-width: 0px;
@@ -71,11 +78,15 @@ QToolButton, #publishBtn,#newBtn,#attributeBtn {
 #dialog_about_ok_button{
 	background: #f0f0f0;
 	border: 1px solid #ececec;
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size: 14px;
 }
 
 #dialog_about_ok_button:hover{
 	background: #ececec;
 	border: 1px solid #ececec;
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size: 16px;
 }
 
 #dialog_about_title_label, #dialog_about_ok_button{
@@ -104,7 +115,78 @@ QToolButton, #publishBtn,#newBtn,#attributeBtn {
 	line-height:25px;
 	color:#454545;
 }
-/***********************dialog********************/
+/***********************dialog end********************/
+
+/*********************messagebox start****************/
+#dialog_message_check_layout{
+	background:#cecece;
+}
+#dialog_message_title_label, #dialog_message_text_label, #dialog_message_check_label{
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size: 14px;
+}
+#dialog_message_title_close_button{
+	background: #ffffff;
+	border-width:0px;
+}
+#dialog_message_title_close_button:hover{
+	background: #f0f0f0;
+	border: 1px solid #f0f0f0;
+}
+#dialog_message_yes_button, #dialog_message_no_button, #dialog_message_cancel_button{
+	background: #f0f0f0;
+	border: 1px solid #ececec;
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size: 14px;
+}
+#dialog_message_yes_button:hover, #dialog_message_no_button:hover, #dialog_message_cancel_button:hover{
+	background: #ececec;
+	border: 1px solid #ececec;
+	font-family:'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
+	font-size: 14px;
+}
+#dialog_message_check_box {
+	spacing: 5px;
+}
+
+#dialog_message_check_box::indicator {
+	width: 13px;
+	height: 13px;
+}
+
+#dialog_message_check_box::indicator:unchecked {
+	border:1px solid #f0f0f0;
+}
+
+#dialog_message_check_box::indicator:unchecked:hover {
+	border:1px solid #cecece;
+}
+
+#dialog_message_check_box::indicator:unchecked:pressed {
+	border:1px solid #cecece;
+}
+
+#dialog_message_check_box::indicator:checked {
+	background:#d8d8d8;
+	border:1px solid #cecece;
+}
+
+#dialog_message_check_box::indicator:checked:hover {
+    border:1px solid #cecece;
+}
+
+#dialog_message_check_box::indicator:checked:pressed {
+	border:1px solid #cecece;
+}
+
+#dialog_message_check_box::indicator:indeterminate:hover {
+	border:1px solid #cecece;
+}
+
+#dialog_message_check_box::indicator:indeterminate:pressed {
+	border:1px solid #cecece;
+}
+/*********************messagebox end******************/
 
 QToolButton:hover, #publishBtn:hover, #newBtn:hover, #attributeBtn:hover, QToolButton:checked{
     background: #1f8dd6;

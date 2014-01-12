@@ -12,6 +12,7 @@
 #include "../include/buildnames.h"
 #include "../include/transnames.h"
 #include "../dialog/aboutdialog.h"
+#include "../dialog/messagebox.h"
 
 class AppDockBar;
 class AppSplitter;

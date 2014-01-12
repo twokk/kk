@@ -4,15 +4,9 @@
 /**
 * dockBar组件显示名称定义
 */
-#define APP_DOCK_BAR_TRANS_NAMES_LOGO_LABEL ":/images/logo-m-t"
 #define APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL " - Markplus"
 #define APP_DOCK_BAR_TRANS_NAMES_BLANK " "
 #define APP_DOCK_BAR_TRANS_NAMES_TEXT_LABEL QObject::tr("undefine")
-#define APP_DOCK_BAR_TRANS_NAMES_MINIM_BUTTON ":/tittleButton/mini"
-#define APP_DOCK_BAR_TRANS_NAMES_MAXIM_BUTTON ":/tittleButton/max"
-#define APP_DOCK_BAR_TRANS_NAMES_NORMAL_BUTTON ":/tittleButton/normal"
-#define APP_DOCK_BAR_TRANS_NAMES_CLOSE_BUTTON ":/tittleButton/close"
-#define APP_DOCK_BAR_TRANS_NAMES_SETUP_BUTTON ":/tittleButton/setup"
 
 /**
 * 设置菜单显示名称定义
@@ -50,7 +44,7 @@
 #define APP_SHOT_CUT_EXIT QObject::tr("Ctrl+Alt+X")
 
 /**
-* 对话框显示名称定义
+* 文件对话框显示名称定义
 */
 #define FILE_OPERATE_SHOW_NOTE QObject::tr("Note")
 #define FILE_OPERATE_CAN_NOT_OPEN_FILE QObject::tr("Can not open file")
@@ -81,6 +75,13 @@
 #define DIALOG_ABOUT_VERSION_INFO QObject::tr("windows<br>Is the latest version.")
 #define DIALOG_ABOUT_VERSION_UPDATE_INFO QObject::tr("Please update to the latest version.")
 #define DIALOG_ABOUT_CONTENT_TEXT QObject::tr("KK is a excellent markdown editor.<br>It is built with QT and other open source software.<br><br><br>Home Page : http://www.twokk.com<br>Copyright 2013-2014 KK Plc. All rights reserved.") // 关于对话框正文内容
-#define DIALOG_ABOUT_OK_BUTN_TEXT QObject::tr("OK")  // 关于对话框OK按钮
+
+/**
+* 对话框内容
+*/
+#define DIALOG_COMMON_TEXT_OK QObject::tr("Ok")     // 对话框OK按钮
+#define DIALOG_COMMON_TEXT_YES QObject::tr("Yes")   // 对话框Yes按钮
+#define DIALOG_COMMON_TEXT_NO QObject::tr("No")     // 对话框No按钮
+#define DIALOG_COMMON_TEXT_CANCEL QObject::tr("Cancel") // 对话框Cancel按钮
 
 #endif // TRANSNAMES_H

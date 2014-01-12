@@ -1,25 +1,24 @@
 <RCC>
-    <qresource prefix="/skin">
-        <file alias="default">skin/default.qss</file>
-    </qresource>
     <qresource prefix="/images">
-        <file alias="lightblue">skin/liteblut.png</file>
-        <file alias="logo-m-t">skin/logo-m-t.ico</file>
-        <file alias="title_bg">skin/title_bg.png</file>
-        <file alias="close_dialog">skin/close_dialog.png</file>
-        <file alias="about_icon">skin/aboutIcon.png</file>
+        <file alias="close_dialog">skin/image/16_16/close_dialog.png</file>
+        <file alias="logo_m_t">skin/image/16_16/logo-m-t.ico</file>
+        <file alias="close">skin/image/24_24/close.png</file>
+        <file alias="max">skin/image/24_24/max.png</file>
+        <file alias="mini">skin/image/24_24/mini.png</file>
+        <file alias="normal">skin/image/24_24/normal.png</file>
+        <file alias="setup">skin/image/24_24/setup.png</file>
+        <file alias="title_bg">skin/image/200_1/title_bg.png</file>
+        <file alias="about_icon">skin/image/200_200/aboutIcon.png</file>
+        <file alias="page_process">skin/image/64_64/page_process.png</file>
+        <file alias="page_process_128">skin/image/128_128/page_process.png</file>
     </qresource>
     <qresource prefix="/script">
         <file alias="marked">script/marked.js</file>
     </qresource>
-    <qresource prefix="/tittleButton">
-        <file alias="max">skin/max.png</file>
-        <file alias="mini">skin/mini.png</file>
-        <file alias="normal">skin/normal.png</file>
-        <file alias="setup">skin/setup.png</file>
-        <file alias="close">skin/close.png</file>
-    </qresource>
     <qresource prefix="/html">
-        <file alias="default">skin/default.html</file>
+        <file alias="default">skin/html/default.html</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file alias="default">skin/qss/default.qss</file>
     </qresource>
 </RCC>

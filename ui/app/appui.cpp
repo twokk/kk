@@ -82,6 +82,7 @@ void AppUi::initComponent()
     connect(dockBar->getSetupMenu(), &AppSetupMenu::helpSignal, proxy, &AppProxy::helpSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::aboutSignal, proxy, &AppProxy::aboutSlots);
     connect(dockBar->getSetupMenu(), &AppSetupMenu::feedBackSignal, proxy, &AppProxy::feedBackSlots);
+    connect(dockBar->getSetupMenu(), &AppSetupMenu::exitSignal, proxy, &AppProxy::exitSlots);
     connect(splitter, &AppSplitter::textChangedSignal, proxy, &AppProxy::textChangeSlots);
     connect(this, &AppUi::exitSignals, proxy, &AppProxy::exitSlots);
     connect(proxy, &AppProxy::exitSignals, this, &AppUi::exitSlots);

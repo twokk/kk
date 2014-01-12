@@ -61,7 +61,7 @@ void AppSetupMenu::initActions()
     addSeparator();
     addAction(about);
     addAction(feedBack);
-    addAction(help);
+    //addAction(help);
     addSeparator();
     addAction(exit);
 

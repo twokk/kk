@@ -44,7 +44,7 @@ void AppDockBar::initWindowComponent()
 
     vLayout->setMargin(0);
     titleLayout->setMargin(5);
-    toolsLayout->setMargin(0);
+    toolsLayout->setMargin(5);
 
     vLayout->setSpacing(0);
     titleLayout->setSpacing(0);
@@ -56,24 +56,24 @@ void AppDockBar::initWindowComponent()
 
     closeButton = new QToolButton();
     closeButton->setObjectName(APP_DOCK_BAR_NAME_CLOSE_BUTTON);
-    closeButton->setIcon(QIcon(APP_DOCK_BAR_TRANS_NAMES_CLOSE_BUTTON));
+    closeButton->setIcon(QIcon(APP_DOCK_BAR_CLOSE_BUTTON));
 
     maximButton = new QToolButton();
     maximButton->setObjectName(APP_DOCK_BAR_NAME_MAXIM_BUTTON);
-    maximButton->setIcon(QIcon(APP_DOCK_BAR_TRANS_NAMES_MAXIM_BUTTON));
+    maximButton->setIcon(QIcon(APP_DOCK_BAR_MAXIM_BUTTON));
 
 
     minimButton = new QToolButton();
     minimButton->setObjectName(APP_DOCK_BAR_NAME_MINIM_BUTTON);
-    minimButton->setIcon(QIcon(APP_DOCK_BAR_TRANS_NAMES_MINIM_BUTTON));
+    minimButton->setIcon(QIcon(APP_DOCK_BAR_MINIM_BUTTON));
 
     setupButton = new QToolButton();
     setupButton->setObjectName(APP_DOCK_BAR_NAME_SETUP_BUTTON);
     setupButton->setPopupMode(QToolButton::InstantPopup);
-    setupButton->setIcon(QIcon(APP_DOCK_BAR_TRANS_NAMES_SETUP_BUTTON));
+    setupButton->setIcon(QIcon(APP_DOCK_BAR_SETUP_BUTTON));
 
     logoLable = new QLabel();
-    logoLable->setPixmap(QPixmap(APP_DOCK_BAR_TRANS_NAMES_LOGO_LABEL));
+    logoLable->setPixmap(QPixmap(APP_DOCK_BAR_LOGO_LABEL));
     logoLable->setObjectName(APP_DOCK_BAR_NAME_LOGO_LABEL);
 
     textLabel = new QLabel();
@@ -168,11 +168,11 @@ void AppDockBar::updateMaximButtonIcon(bool maxim)
     // 设置最大化图标
     if(maxim)
     {
-        maximButton->setIcon(QIcon(APP_DOCK_BAR_TRANS_NAMES_MAXIM_BUTTON));
+        maximButton->setIcon(QIcon(APP_DOCK_BAR_NORMAL_BUTTON));
     }
     else // 设置向下还原图标
     {
-        maximButton->setIcon(QIcon(APP_DOCK_BAR_TRANS_NAMES_NORMAL_BUTTON));
+        maximButton->setIcon(QIcon(APP_DOCK_BAR_MAXIM_BUTTON));
     }
 }
 

@@ -4,7 +4,7 @@
 AppProxy::AppProxy(QObject *parent) :
     QObject(parent)
 {
-    qDebug() << "bbbbbbb";
+
 }
 
 /**
@@ -19,7 +19,6 @@ AppProxy::AppProxy(AppDockBar* dockBar, AppSplitter* splitter, AppStatusBar* sta
     this->splitter = splitter;
     this->statusBar = statusBar;
     memFileInfo = new FileInfo();
-    splitter->setMarkdown("Hello,world");
 }
 
 /**
@@ -61,7 +60,7 @@ void AppProxy::helpSlots()
 void AppProxy::aboutSlots()
 {
     AboutDialog* aboutDialog = new AboutDialog();
-    aboutDialog->show();
+    aboutDialog->exec();
 }
 
 /**
@@ -69,7 +68,9 @@ void AppProxy::aboutSlots()
 */
 void AppProxy::feedBackSlots()
 {
-    QMessageBox::information(NULL, APP_SETUP_MENU_FEED_BACK, "<h2>Feed Back</h2><h3>QQ Group:348234568        </h3><br/>", QMessageBox::Ok);
+    MessageBox* msg = new MessageBox(0, true, true, true, true, "Warn", "Do you want to save the file?", DIALOG_MSESSAGE_TYPE_FILE, "include css");
+    qDebug() << "adfadfa";
+    qDebug() << msg->exec();
 }
 
 /*******************************************槽函数*****************************************************/
@@ -408,6 +409,9 @@ void AppProxy::updateBrowserHtml()
 
     // 为浏览器设置html
     QString html = script.markdownToHtml(memFileInfo->getMarkdown());
+
+    // 更新内存中的html
+    memFileInfo->setHtml(html);
 
     splitter->setBrowserHtml(html);
 }

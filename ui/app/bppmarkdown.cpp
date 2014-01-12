@@ -31,6 +31,9 @@ void BppMarkDown::initWindowStatus()
 
     // 设置不接受默认的拖拽
     this->setAcceptDrops(false);
+
+    // 设置tab长度
+    this->setTabStopWidth(APP_MARKDOWN_EDITOR_TAB_WIDTH);
 }
 
 /**
