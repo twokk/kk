@@ -70,7 +70,7 @@ void MessageBox::initComponent(bool isYes, bool isNo, bool isCancel, bool isChec
     iconLayout->setSpacing(0);
 
     checkLayout = new QHBoxLayout();
-    checkLayout->setObjectName(DIALOG_MESSAGE_NAME_BODY_LAYOUT);
+    checkLayout->setObjectName(DIALOG_MESSAGE_NAME_CHECK_LAYOUT);
     checkLayout->setMargin(0);
     checkLayout->setSpacing(DIALOG_COMMON_SPECING_WIDTH);
     checkLayout->setAlignment(Qt::AlignBottom);
@@ -211,7 +211,6 @@ void MessageBox::initComponent(bool isYes, bool isNo, bool isCancel, bool isChec
 
     mainLayout->addLayout(titleLayout);
     mainLayout->addLayout(bodyLayout);
-    mainLayout->addLayout(checkLayout);
     mainLayout->addLayout(btnLayout);
 
     setLayout(mainLayout);

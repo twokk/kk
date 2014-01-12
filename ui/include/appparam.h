@@ -86,6 +86,7 @@ enum enum_Direction
 #define DIALOG_ABOUT_FIX_WIDTH 616                      // 关于对话框固定宽度
 #define DIALOG_MESSAGE_BOX_FIX_HEIGHT 170               // 消息对话框固定高度
 #define DIALOG_MESSAGE_BOX_FIX_WIDTH 400                // 消息对话框固定宽度
+#define DIALOG_MESSAGE_BOX_DONE_CLOSE 0                 // 消息对话框按钮Close的返回值
 #define DIALOG_MESSAGE_BOX_DONE_NO 2                    // 消息对话框按钮No的返回值
 #define DIALOG_MESSAGE_BOX_DONE_YES_WITH_CHECK 3        // 消息对话框按钮Yes附带checkBox的返回值
 #define DIALOG_MESSAGE_BOX_DONE_YES_WITHOUT_CHECK 4     // 消息对话框按钮Yes不带checkBox的返回值

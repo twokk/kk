@@ -79,6 +79,21 @@ void AppProxy::feedBackSlots()
  */
 void AppProxy::openFileSlots()
 {
+    // 如果文件全路径名为空，内容不为空，则提醒用户是否保存文件
+    if(memFileInfo->getMarkdownFileFullName().isEmpty() && !memFileInfo->getMarkdown().isEmpty())
+    {
+        MessageBox* msg = new MessageBox(NULL, true, true, true, false, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, DIALOG_MSESSAGE_TYPE_FILE, NULL);
+        int msgCode = msg->exec();
+
+        // YES || CANCLE || CLOSE
+        if(msgCode == DIALOG_MESSAGE_BOX_DONE_YES_WITHOUT_CHECK
+                || msgCode == DIALOG_MESSAGE_BOX_DONE_CLOSE
+                || msgCode == DIALOG_MESSAGE_BOX_DONE_CANCEL)
+        {
+            return;
+        }
+    }
+
     // 如果文件全路径名不为空，则先保存
     if(!memFileInfo->getMarkdownFileFullName().isEmpty())
     {
@@ -181,22 +196,23 @@ void AppProxy::exitSlots()
     if(!memFileInfo->getMarkdownFileFullName().isEmpty() && !memFileInfo->isSaved())
     {
         // 询问用户是否保存文件
-        QMessageBox::StandardButton sb = QMessageBox::information(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel, QMessageBox::Yes);
+        MessageBox* msg = new MessageBox(NULL, true, true, true, false, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, DIALOG_MSESSAGE_TYPE_FILE, NULL);
+        int msgCode = msg->exec();
 
         // 用户要求保存文件
-        if(sb == QMessageBox::Yes)
+        if(msgCode == DIALOG_MESSAGE_BOX_DONE_YES_WITHOUT_CHECK)
         {
             writeFile(memFileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN);
 
             // 关闭窗口
             emit exitSignals(true);
         }
-        else if(sb == QMessageBox::No)
+        else if(msgCode == DIALOG_MESSAGE_BOX_DONE_NO)
         {
             // 关闭窗口
             emit exitSignals(true);
         }
-        else if(sb == QMessageBox::Cancel)
+        else if(msgCode == DIALOG_MESSAGE_BOX_DONE_CANCEL)
         {
             // 取消关闭
             emit exitSignals(false);
@@ -211,8 +227,6 @@ void AppProxy::exitSlots()
         return;
     }
 
-    qDebug() << "aaaaa";
-
     // 文件为空&&文件名为空，不需要保存
     if(memFileInfo->getMarkdown().isEmpty() && memFileInfo->getMarkdownFileFullName().isEmpty())
     {
@@ -222,20 +236,19 @@ void AppProxy::exitSlots()
         return;
     }
 
-    qDebug() << "bbbbb";
-
     // 文件不为空&&文件名为空，需要新建保存文件
     if(!memFileInfo->getMarkdown().isEmpty() && memFileInfo->getMarkdownFileFullName().isEmpty())
     {
         // 询问用户是否保存文件
-        QMessageBox::StandardButton sb = QMessageBox::information(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel, QMessageBox::Yes);
+        MessageBox* msg = new MessageBox(NULL, true, true, true, false, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, DIALOG_MSESSAGE_TYPE_FILE, NULL);
+        int msgCode = msg->exec();
 
         // 保存文件
-        if(sb == QMessageBox::Yes)
+        if(msgCode == DIALOG_MESSAGE_BOX_DONE_YES_WITHOUT_CHECK)
         {
             // 弹出保存对话
             QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE, ".", FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND, 0, QFileDialog::DontUseNativeDialog);
-            qDebug() << fileFullName;
+
             if(!fileFullName.isEmpty() && writeFile(fileFullName + FILE_STATUS_MARKDOWN_EXTENSION_MD, FILE_STATUS_TYPE_MARKDOWN))
             {
                 // 关闭窗口
@@ -247,12 +260,12 @@ void AppProxy::exitSlots()
                 emit exitSignals(false);
             }
         }
-        else if(sb == QMessageBox::No)
+        else if(msgCode == DIALOG_MESSAGE_BOX_DONE_NO)
         {
             // 不保存文件，关闭窗口
             emit exitSignals(true);
         }
-        else if(sb == QMessageBox::Cancel)
+        else if(msgCode == DIALOG_MESSAGE_BOX_DONE_CANCEL)
         {
             // 取消关闭
             emit exitSignals(false);
@@ -275,10 +288,18 @@ void AppProxy::dropMarkdownSlots(QString fileFullName)
     }
 
     // 询问是否保存文件
-    if(memFileInfo->getMarkdownFileFullName().isEmpty()
-            && QMessageBox::question(NULL, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes)
+    if(memFileInfo->getMarkdownFileFullName().isEmpty())
     {
-        return;
+        MessageBox* msg = new MessageBox(NULL, true, true, true, false, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, DIALOG_MSESSAGE_TYPE_FILE, NULL);
+        int msgCode = msg->exec();
+
+        // YES || CANCEL || CLOSE
+        if(msgCode == DIALOG_MESSAGE_BOX_DONE_YES_WITHOUT_CHECK
+                || msgCode == DIALOG_MESSAGE_BOX_DONE_CANCEL
+                || msgCode == DIALOG_MESSAGE_BOX_DONE_CLOSE)
+        {
+            return;
+        }
     }
 
     // 保存已经存在的文件
