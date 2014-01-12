@@ -287,8 +287,8 @@ void AppProxy::dropMarkdownSlots(QString fileFullName)
         return;
     }
 
-    // 询问是否保存文件
-    if(memFileInfo->getMarkdownFileFullName().isEmpty())
+    // 文件名为空 || 文件内容不为空，询问是否保存文件
+    if(memFileInfo->getMarkdownFileFullName().isEmpty() && !memFileInfo->getMarkdown().isEmpty())
     {
         MessageBox* msg = new MessageBox(NULL, true, true, true, false, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, DIALOG_MSESSAGE_TYPE_FILE, NULL);
         int msgCode = msg->exec();

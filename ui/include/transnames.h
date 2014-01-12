@@ -4,7 +4,7 @@
 /**
 * dockBar组件显示名称定义
 */
-#define APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL " - Markplus"
+#define APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL " - KK"
 #define APP_DOCK_BAR_TRANS_NAMES_BLANK " "
 #define APP_DOCK_BAR_TRANS_NAMES_TEXT_LABEL QObject::tr("undefine")
 

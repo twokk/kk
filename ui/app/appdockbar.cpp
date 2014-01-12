@@ -191,7 +191,7 @@ void AppDockBar::updateTitleText(QString titleText, bool isSaved)
     if(isSaved)
     {
         // 保存状态
-        this->textLabel->setText(titleText + APP_DOCK_BAR_NAME_LOGO_LABEL);
+        this->textLabel->setText(titleText + APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL);
     }
     else
     {
