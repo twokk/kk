@@ -428,11 +428,14 @@ void AppProxy::updateBrowserHtml()
         memFileInfo->setMarkdown(splitter->getMarkdown());
     }
 
-    // 为浏览器设置html
+    // 将 markdown编译成html
     QString html = script.markdownToHtml(memFileInfo->getMarkdown());
 
     // 更新内存中的html
-    memFileInfo->setHtml(html);
+    memFileInfo->setHtml(memFileInfo->getHtmlTemplete().arg(html));
 
-    splitter->setBrowserHtml(html);
+    qDebug() << memFileInfo->getHtml();
+
+    // 更新浏览器的html
+    splitter->setBrowserHtml(memFileInfo->getHtml());
 }

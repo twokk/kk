@@ -1,7 +1,10 @@
 ﻿#ifndef FILEINFO_H
 #define FILEINFO_H
 
+#include <QFile>
 #include <QObject>
+#include <QTextStream>
+#include "../include/appparam.h"
 
 class FileInfo : public QObject
 {
@@ -10,6 +13,7 @@ public:
     explicit FileInfo(QObject *parent = 0);
     QString getFileTitle();
     QString getMarkdownFileName();
+    QString getHtmlTemplete();
     QString getHtmlFileName();
     QString getMarkdownFileFullName();
     QString getHtmlFileFullName();
@@ -19,6 +23,7 @@ public:
     bool isSaved();
     bool isTitled();
     void setFileTitle(QString);
+    void setHtmlTemplete(QString);
     void setMarkdownFileName(QString);
     void setHtmlFileName(QString);
     void setMarkdownFileFullName(QString);
@@ -43,8 +48,12 @@ private:
     QString markdown;
     QString html;
     QString htmlText;
+    QString htmlTemplate;
     bool bSaved;
     bool bTitled;
+
+private:
+    bool loadHtmlTemplate();
 
 };
 

@@ -14,6 +14,13 @@
 #define APP_WINDOW_NAME_SELF_NAME "app_window_name_self_name"
 
 /**
+* splitter组件名称
+*/
+#define APP_SPLITTER_MARDOWN "app_splitter_markdown"
+#define APP_SPLITTER_BROWSER "app_splitter_browser"
+#define APP_MARKDOWN_BORDER "app_markdown_border"
+
+/**
 * dockBar组件名称
 */
 #define APP_DOCK_BAR_NAME_V_LAYOUT "app_dock_bar_name_v_layout"
