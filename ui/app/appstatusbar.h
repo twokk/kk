@@ -3,6 +3,9 @@
 
 #include "../include/appparam.h"
 #include "../base/basestatusbar.h"
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QLabel>
 
 /**
 * 系统状态栏，在窗体最底部
@@ -19,8 +22,11 @@ signals:
 public slots:
 
 private:
-    void initWindowStatus();
+    QLabel timeLabel;
+    QLabel statusLabel;
 
+private:
+    void initWindowStatus();
 };
 
 #endif // APPSTATUSBAR_H

@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     * 国际化支持
     */
     QTranslator translator;
-    translator.load("lang_zh_CN.qm");
+    translator.load(":/language/lang_zh_CN.qm");
     a.installTranslator(&translator);
 
     AppUi ui;

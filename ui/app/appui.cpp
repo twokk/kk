@@ -117,6 +117,7 @@ void AppUi::initWindowState()
 
     // 最大化窗体
     this->setGeometry(qApp->desktop()->availableGeometry());
+    this->dockBar->updateMaximButtonIcon(true);
 
     // 左键状态
     bLeftPressed = false;
@@ -225,18 +226,25 @@ void AppUi::mouseMoveEvent(QMouseEvent *event)
         // 左键按下&&非最大化&&正在移动
         if(this->bLeftPressed && this->bIsMoving)
         {
-            // 移动窗体
-            this->move(this->pos() + event->globalPos() - this->pPressPoint);
+            // 如果移动到屏幕最上方则将窗口最大化
+            if (event->globalY() == 0)
+            {
+                this->showMaxRestore();
+            }
+            else
+            {
+                // 移动窗体
+                this->move(this->pos() + event->globalPos() - this->pPressPoint);
 
-            // 更新按下的点
-            this->pPressPoint = event->globalPos();
+                // 更新按下的点
+                this->pPressPoint = event->globalPos();
 
-            // 关闭调整大小，防止串扰
-            this->bIsResizing = false;
+                // 关闭调整大小，防止串扰
+                this->bIsResizing = false;
 
-            // 设置光标样式为普通
-            setCursorStyle(enum_Direction(eNone));
-
+                // 设置光标样式为普通
+                setCursorStyle(enum_Direction(eNone));
+            }
             return;
         }
 
@@ -261,6 +269,17 @@ void AppUi::mouseMoveEvent(QMouseEvent *event)
         // 设置光标样式为普通
         setCursorStyle(enum_Direction(eNone));
     }
+    else
+    {
+        // 如果最大化, 鼠标放在标题栏拖动, 则还原窗口, 并移动到当前位置
+        if (this->bLeftPressed && this->bIsMoving)
+        {
+            rRestoreWindow.setBottom(event->globalY()+rRestoreWindow.height());
+            rRestoreWindow.setTop(event->globalY());
+            this->showMaxRestore();
+            this->mouseMoveEvent(event);
+        }
+    }
 }
 
 /**
@@ -275,8 +294,8 @@ void AppUi::mousePressEvent(QMouseEvent *event)
         this->bLeftPressed = true;
     }
 
-    // 如果当前窗口非最大化，则记录点击位置
-    if(!this->bIsMaxAble && event->button() == Qt::LeftButton)
+    // 如果是左键,记录点击位置
+    if(event->button() == Qt::LeftButton)
     {
         this->pPressPoint = event->globalPos();
     }

@@ -21,4 +21,7 @@
     <qresource prefix="/qss">
         <file alias="default">skin/qss/default.qss</file>
     </qresource>
+    <qresource prefix="/language">
+        <file>lang_zh_CN.qm</file>
+    </qresource>
 </RCC>

@@ -34,6 +34,9 @@ void BppMarkDown::initWindowStatus()
 
     // 设置tab长度
     this->setTabStopWidth(APP_MARKDOWN_EDITOR_TAB_WIDTH);
+
+    // 设置字体
+    this->setFont(QFont("Songti SC,SimSun,serif"));
 }
 
 /**
@@ -44,6 +47,9 @@ BppMarkDownBase::BppMarkDownBase(QWidget *parent) :
     QPlainTextEdit(parent),
     _border(new BppMarkDownBorder(this))
 {
+    // 设置markdown编辑器border边框对象名称
+    _border->setObjectName(APP_MARKDOWN_BORDER);
+
     this->updateBorderWidth(0);
     this->hightLightCurrentLine();
 
@@ -70,7 +76,7 @@ void BppMarkDownBase::borderPaintEvent(QPaintEvent *event)
 
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
-    int top = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
+    int top = (int)blockBoundingGeometry(block).translated(contentOffset()).top()+5;
     int bottom = top + (int)blockBoundingRect(block).height();
 
     while (block.isValid() && top <= event->rect().bottom())

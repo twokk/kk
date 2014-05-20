@@ -4,6 +4,7 @@
 AppScript::AppScript()
 {
     markedContext = v8::Context::New();
+
     initEnvironment();
 }
 
@@ -19,6 +20,7 @@ void AppScript::initEnvironment()
 QString AppScript::markdownToHtml(QString markdown)
 {
     markdown = filterIllegalChar(markdown);
+    printf("%s\n", markdown);
     v8::TryCatch tryCatch;
     v8::Context::Scope scope(markedContext);
     QString cmd = QString("marked(\"%1\");").arg(markdown);

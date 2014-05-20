@@ -4,7 +4,7 @@
 /**
 * dockBar组件显示名称定义
 */
-#define APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL " - Markplus"
+#define APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL " - KK"
 #define APP_DOCK_BAR_TRANS_NAMES_BLANK " "
 #define APP_DOCK_BAR_TRANS_NAMES_TEXT_LABEL QObject::tr("undefine")
 
@@ -40,6 +40,7 @@
 #define APP_SHOT_CUT_PRINT QObject::tr("Ctrl+P")
 #define APP_SHOT_CUT_OPEN QObject::tr("Ctrl+O")
 #define APP_SHOT_CUT_SAVE QObject::tr("Ctrl+S")
+#define APP_SHOT_CUT_SAVEAS QObject::tr("Ctrl+Alt+S")
 #define APP_SHOT_CUT_SAVE_TO_HTML QObject::tr("Ctrl+H")
 #define APP_SHOT_CUT_EXIT QObject::tr("Ctrl+Alt+X")
 
@@ -72,7 +73,7 @@
 */
 #define DIALOG_ABOUT_TITLE_TEXT QObject::tr("About") // 关于对话框标题
 #define DIALOG_ABOUT_HEAD_TEXT QObject::tr("KK v0.5.2") // 关于对话框正文标题
-#define DIALOG_ABOUT_VERSION_INFO QObject::tr("windows<br>Is the latest version.")
+#define DIALOG_ABOUT_VERSION_INFO QObject::tr("windows<br>is the latest version.")
 #define DIALOG_ABOUT_VERSION_UPDATE_INFO QObject::tr("Please update to the latest version.")
 #define DIALOG_ABOUT_CONTENT_TEXT QObject::tr("KK is a excellent markdown editor.<br>It is built with QT and other open source software.<br><br><br>Home Page : http://www.twokk.com<br>Copyright 2013-2014 KK Plc. All rights reserved.") // 关于对话框正文内容
 

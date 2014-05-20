@@ -17,7 +17,7 @@ class MessageBox : public QDialog
     Q_OBJECT
 public:
     explicit MessageBox(QWidget *parent = 0);
-    MessageBox(QWidget *parent = 0, bool isYes = true, bool isNo = true, bool isCancel = true, bool isCheckBox = true, QString title = NULL, QString text = NULL, int msgType = 0, QString checkText = NULL);
+    MessageBox(QWidget *parent, bool isYes = true, bool isNo = true, bool isCancel = true, bool isCheckBox = true, QString title = NULL, QString text = NULL, int msgType = 0, QString checkText = NULL);
 
 private:
     QLabel* titleLab;

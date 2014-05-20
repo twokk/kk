@@ -16,6 +16,7 @@
 #include "../app/bppmarkdown.h"
 #include "../model/fileinfo.h"
 #include "../include/appparam.h"
+#include "../include/buildnames.h"
 #include "../include/transnames.h"
 #include "../script/appscript.h"
 

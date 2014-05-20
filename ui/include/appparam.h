@@ -15,6 +15,13 @@ enum enum_Direction
    eLeftTop = eLeft + eTop
 };
 
+enum FileType
+{
+    FileTypeMD = 1,
+    FileTypeHTML = 2,
+    FileTypeOther = 3
+};
+
 // 公共尺寸定义
 #define APP_COMMON_SIZE_16 16
 #define APP_COMMON_SIZE_24 24
@@ -55,16 +62,13 @@ enum enum_Direction
 #define APP_DOCK_BAR_LOGO_LABEL ":/images/logo_m_t"
 
 // 主窗体状态栏参数
-#define APP_STATUS_BAR_FIX_HEIGHT 10
+#define APP_STATUS_BAR_FIX_HEIGHT 20
 
 // 文件状态
 #define FILE_STATUS_MARKDOWN_EXTENSION_MD ".md"
 #define FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN ".markdown"
 #define FILE_STATUS_MARKDOWN_EXTENSION_HTM ".htm"
 #define FILE_STATUS_MARKDOWN_EXTENSION_HTML ".html"
-#define FILE_STATUS_TYPE_MARKDOWN 1
-#define FILE_STATUS_TYPE_HTML 2
-#define FILE_STATUS_TYPE_OTHER 3
 
 // HTML模板相关
 #define HTML_TEMPLATE_DEFAULT ":/html/default"
@@ -93,6 +97,6 @@ enum enum_Direction
 #define DIALOG_MESSAGE_BOX_DONE_CANCEL 5                 // 消息对话框按钮Cancel的返回值
 #define DIALOG_MSESSAGE_TYPE_FILE 1                     // 消息类型 1：文件
 #define DIALOG_MESSAGE_BOX_PAGE_OPERATE_ICON ":/images/page_process" // 消息对话框文件操作提醒ICON
-
+#define DIALOG_DEFAULT_PATH "."
 
 #endif // APPPARAM_H

@@ -1,10 +1,11 @@
 ﻿#include "appproxy.h"
 #include <QDebug>
+#include <QString>
 
 AppProxy::AppProxy(QObject *parent) :
     QObject(parent)
 {
-
+    defaultPath = DIALOG_DEFAULT_PATH;
 }
 
 /**
@@ -97,7 +98,7 @@ void AppProxy::openFileSlots()
     // 如果文件全路径名不为空，则先保存
     if(!memFileInfo->getMarkdownFileFullName().isEmpty())
     {
-        writeFile(memFileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN);
+        writeFile(memFileInfo->getMarkdownFileFullName(), FileTypeMD);
     }
 
     // 文件名为空，则弹出打开对话框
@@ -125,10 +126,11 @@ void AppProxy::openFileSlots()
 void AppProxy::saveHtmlSlots()
 {
     // 弹出保存对话框
-    QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_TO_HTML_TITLE, ".", FILE_OPERATE_SAVE_TO_HTML_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+    QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_TO_HTML_TITLE, defaultPath, FILE_OPERATE_SAVE_TO_HTML_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+    defaultPath = fileFullName.left(fileFullName.lastIndexOf('\\'));
 
     // 保存HTML文件
-    writeFile(fileFullName, FILE_STATUS_TYPE_HTML);
+    writeFile(fileFullName, FileTypeHTML);
 }
 
 /**
@@ -136,8 +138,10 @@ void AppProxy::saveHtmlSlots()
 */
 void AppProxy::saveAsSlots()
 {
-    QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_AS, ".", FILE_OPERATE_SAVE_AS_EXTEND, 0, QFileDialog::DontUseNativeDialog);
-    if(!fileFullName.isEmpty() && writeFile(fileFullName, FILE_STATUS_TYPE_OTHER))
+    QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_AS, defaultPath, FILE_OPERATE_SAVE_AS_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+    defaultPath = fileFullName.left(fileFullName.lastIndexOf('\\'));
+
+    if(!fileFullName.isEmpty() && writeFile(fileFullName, FileTypeOther))
     {
         // 如果另存为格式为.md或.markdown，则设置文件为已保存
         if(fileFullName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MD) || fileFullName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN))
@@ -156,13 +160,13 @@ void AppProxy::saveMarkdownSlots()
     {
         QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE, ".", FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND, 0, QFileDialog::DontUseNativeDialog);
         // 保存markdown文件
-        if(!fileFullName.isEmpty() && writeFile(fileFullName, FILE_STATUS_TYPE_MARKDOWN))
+        if(!fileFullName.isEmpty() && writeFile(fileFullName, FileTypeMD))
         {
             // 更新标题栏为保存状态
             dockBar->updateTitleText(memFileInfo->getFileTitle(), true);
         }
     }
-    else if(writeFile(memFileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN))
+    else if(writeFile(memFileInfo->getMarkdownFileFullName(), FileTypeMD))
     {
         // 更新标题栏为保存状态
         dockBar->updateTitleText(memFileInfo->getFileTitle(), true);
@@ -202,7 +206,7 @@ void AppProxy::exitSlots()
         // 用户要求保存文件
         if(msgCode == DIALOG_MESSAGE_BOX_DONE_YES_WITHOUT_CHECK)
         {
-            writeFile(memFileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN);
+            writeFile(memFileInfo->getMarkdownFileFullName(), FileTypeMD);
 
             // 关闭窗口
             emit exitSignals(true);
@@ -247,9 +251,10 @@ void AppProxy::exitSlots()
         if(msgCode == DIALOG_MESSAGE_BOX_DONE_YES_WITHOUT_CHECK)
         {
             // 弹出保存对话
-            QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE, ".", FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+            QString fileFullName = QFileDialog::getSaveFileName(NULL, FILE_OPERATE_SAVE_TO_MARKDOAN_TITLE, defaultPath, FILE_OPERATE_SAVE_TO_MARKDOWN_EXTEND, 0, QFileDialog::DontUseNativeDialog);
+            defaultPath = fileFullName.left(fileFullName.lastIndexOf('\\'));
 
-            if(!fileFullName.isEmpty() && writeFile(fileFullName + FILE_STATUS_MARKDOWN_EXTENSION_MD, FILE_STATUS_TYPE_MARKDOWN))
+            if(!fileFullName.isEmpty() && writeFile(fileFullName + FILE_STATUS_MARKDOWN_EXTENSION_MD, FileTypeMD))
             {
                 // 关闭窗口
                 emit exitSignals(true);
@@ -287,8 +292,8 @@ void AppProxy::dropMarkdownSlots(QString fileFullName)
         return;
     }
 
-    // 询问是否保存文件
-    if(memFileInfo->getMarkdownFileFullName().isEmpty())
+    // 文件名为空 || 文件内容不为空，询问是否保存文件
+    if(memFileInfo->getMarkdownFileFullName().isEmpty() && !memFileInfo->getMarkdown().isEmpty())
     {
         MessageBox* msg = new MessageBox(NULL, true, true, true, false, FILE_OPERATE_SHOW_NOTE, FILE_OPERATE_NOTE_SAVE_FILE, DIALOG_MSESSAGE_TYPE_FILE, NULL);
         int msgCode = msg->exec();
@@ -305,7 +310,7 @@ void AppProxy::dropMarkdownSlots(QString fileFullName)
     // 保存已经存在的文件
     if(!memFileInfo->getMarkdownFileFullName().isEmpty())
     {
-        writeFile(memFileInfo->getMarkdownFileFullName(), FILE_STATUS_TYPE_MARKDOWN);
+        writeFile(memFileInfo->getMarkdownFileFullName(), FileTypeMD);
     }
 
     // 读取文件内容
@@ -364,9 +369,13 @@ bool AppProxy::readFile(QString fileFullName)
 * @fileFullName 文件全路径名称
 * @type 写文件类型，1:markdown,2:html
 */
-bool AppProxy::writeFile(QString fileFullName, int type)
+bool AppProxy::writeFile(QString fileFullName, FileType type)
 {
     if(!fileFullName.isEmpty()) {
+
+        // 将文件的后缀名补齐
+        fileFullName = completeSuffix(fileFullName, type);
+
         QFile file(fileFullName);
 
         // 打开文件失败
@@ -378,14 +387,8 @@ bool AppProxy::writeFile(QString fileFullName, int type)
         // 写文件
         QTextStream out(&file);
         // 保存markdown
-        if(type == FILE_STATUS_TYPE_MARKDOWN || type == FILE_STATUS_TYPE_OTHER)
+        if(type == FileTypeMD || type == FileTypeOther)
         {
-            // 如果文件不是以.md|.markdown，则追加结尾
-            if(type == FILE_STATUS_TYPE_MARKDOWN && !fileFullName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MD) && !fileFullName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN))
-            {
-                fileFullName = fileFullName + FILE_STATUS_MARKDOWN_EXTENSION_MD;
-            }
-
             QFileInfo info(fileFullName);
             // 更新文件标题
             memFileInfo->setFileTitle(info.filePath());
@@ -402,7 +405,7 @@ bool AppProxy::writeFile(QString fileFullName, int type)
             out << memFileInfo->getMarkdown();
         }
         // 保存html
-        else if(type == FILE_STATUS_TYPE_HTML)
+        else if(type == FileTypeHTML)
         {
             // 写文件内容到输出流
             out << memFileInfo->getHtml();
@@ -428,11 +431,38 @@ void AppProxy::updateBrowserHtml()
         memFileInfo->setMarkdown(splitter->getMarkdown());
     }
 
-    // 为浏览器设置html
+    // 将 markdown编译成html
     QString html = script.markdownToHtml(memFileInfo->getMarkdown());
 
     // 更新内存中的html
-    memFileInfo->setHtml(html);
+    memFileInfo->setHtml(memFileInfo->getHtmlTemplete().arg(html));
 
-    splitter->setBrowserHtml(html);
+    // 更新浏览器的html
+    splitter->setBrowserHtml(memFileInfo->getHtml());
+}
+
+/**
+ * 补全文件的后缀名
+ * @fileName 文件名
+ * @type 文件类型，FileType枚举
+ * */
+QString AppProxy::completeSuffix(QString fileName, FileType type)
+{
+    if (FileTypeMD == type)
+    {
+        if (!fileName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MD)
+                && !fileName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_MARKDOWN))
+        {
+            fileName.append(FILE_STATUS_MARKDOWN_EXTENSION_MD);
+        }
+    }
+    else if (FileTypeHTML == type)
+    {
+        if (!fileName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_HTM)
+                && !fileName.endsWith(FILE_STATUS_MARKDOWN_EXTENSION_HTML))
+        {
+            fileName.append(FILE_STATUS_MARKDOWN_EXTENSION_HTML);
+        }
+    }
+    return fileName;
 }

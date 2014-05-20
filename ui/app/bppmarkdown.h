@@ -8,6 +8,7 @@
 #include <QTextBlock>
 #include <QtWidgets/QPlainTextEdit>
 #include "../include/appparam.h"
+#include "../include/buildnames.h"
 
 class BppMarkDown;
 class BppMarkDownBase;

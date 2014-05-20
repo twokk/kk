@@ -27,7 +27,7 @@ void AppDockBar::initWindowStatus()
     // 继承父组件背景
     this->setAutoFillBackground(true);
 
-    // 设置北京透明
+    // 设置背景透明
     this->setStyleSheet(APP_WINDOW_BACKGROUND_TRANSPARENT);
 }
 
@@ -61,7 +61,6 @@ void AppDockBar::initWindowComponent()
     maximButton = new QToolButton();
     maximButton->setObjectName(APP_DOCK_BAR_NAME_MAXIM_BUTTON);
     maximButton->setIcon(QIcon(APP_DOCK_BAR_MAXIM_BUTTON));
-
 
     minimButton = new QToolButton();
     minimButton->setObjectName(APP_DOCK_BAR_NAME_MINIM_BUTTON);
@@ -191,7 +190,7 @@ void AppDockBar::updateTitleText(QString titleText, bool isSaved)
     if(isSaved)
     {
         // 保存状态
-        this->textLabel->setText(titleText + APP_DOCK_BAR_NAME_LOGO_LABEL);
+        this->textLabel->setText(titleText + APP_DOCK_BAR_TRANS_NAMES_TITLE_LABEL);
     }
     else
     {

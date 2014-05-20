@@ -173,3 +173,36 @@ void FileInfo::setHtml(QString html)
 {
     this->html = html;
 }
+
+/**
+* 获取HTML模板
+*/
+QString FileInfo::getHtmlTemplete()
+{
+    // 如果HTML模板为空，则加载HTML模板
+    if(htmlTemplate.isNull() || htmlTemplate.isEmpty())
+    {
+        QFile file(HTML_TEMPLATE_DEFAULT);
+
+        // 打开文件失败
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            return "";
+        }
+
+        // 读文件
+        QTextStream in(&file);
+        htmlTemplate = in.readAll();
+        file.close();
+    }
+
+    return htmlTemplate;
+}
+
+/**
+* 设置HTML模板
+*/
+void FileInfo::setHtmlTemplete(QString htmlTemplete)
+{
+    // 设置HTML模板
+    this->htmlTemplate = htmlTemplete;
+}

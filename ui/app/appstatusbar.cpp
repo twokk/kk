@@ -1,4 +1,7 @@
 ﻿#include "appstatusbar.h"
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QLineEdit>
 
 AppStatusBar::AppStatusBar(QWidget *parent) :
     BaseStatusBar(parent)
@@ -18,4 +21,7 @@ void AppStatusBar::initWindowStatus()
     this->setAutoFillBackground(true);
 
     this->setStyleSheet(APP_WINDOW_BACKGROUND_TRANSPARENT);
+
+
+
 }

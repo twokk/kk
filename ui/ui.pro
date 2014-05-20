@@ -8,6 +8,7 @@ TEMPLATE = app
 TARGET = markplus
 
 QT       += core widgets webkitwidgets
+QT       += network
 
 DEFINES += UI_LIBRARY
 

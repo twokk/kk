@@ -35,6 +35,7 @@ private:
     AppStatusBar* statusBar;
     FileInfo* memFileInfo;
     AppScript script;
+    QString defaultPath;
 
 signals:
     void exitSignals(bool);     // 退出程序信号
@@ -57,8 +58,9 @@ public slots:
 private:
     QString readFile();
     bool readFile(QString);
-    bool writeFile(QString, int);
+    bool writeFile(QString, FileType);
     void updateBrowserHtml();   // 更新浏览器HTML内容
+    QString completeSuffix(const QString, FileType);
 
 };
 

@@ -51,6 +51,7 @@ private:
 signals:
     void changeMaximButtonIcon(bool);
     void exitSignals();
+
 public slots:
     void showMaxRestore();
     void exitSlots(bool);

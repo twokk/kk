@@ -29,7 +29,10 @@ void AppSplitter::initWindowStatus()
 void AppSplitter::initComponet()
 {
     markDown = new BppMarkDown();
+    markDown->setObjectName(APP_SPLITTER_MARDOWN);
+
     browser = new QWebView();
+    browser->setObjectName(APP_SPLITTER_BROWSER);
 
     this->addWidget(markDown);
     this->addWidget(browser);
